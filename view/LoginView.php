@@ -56,7 +56,7 @@ class LoginView {
 	}
 
 	public function backWithCookieMessage() : string {
-		return "Welcome back with cookie.";
+		return "Welcome back with cookie";
 	}
 
 	public function byeMessage() : string {
