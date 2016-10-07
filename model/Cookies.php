@@ -4,7 +4,7 @@ namespace model;
 
 
 /**
- * Represents a 'catalog' of cookiepasswords.
+ * Represents a 'catalog' of cookieinformation
  */
 class Cookies {
 	private $cookieDAL;

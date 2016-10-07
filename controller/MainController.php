@@ -37,8 +37,6 @@ class MainController {
 
 	public function init() {
 
-
-
 		if ($this->loginView->wantsToLogin()) {
 			return $this->loginController->login();
 
@@ -49,7 +47,6 @@ class MainController {
 			return $this->registerController->register();
 
 		} else if ($this->registerView->wantsToAccsessRegister()) {
-
 			if ($this->sessionModel->isLoggedIn()) {
 				header('Location: '. $_SERVER['PHP_SELF']);
 			}
@@ -58,7 +55,7 @@ class MainController {
 
 		} else if ($this->loginView->isCookieSet() && $this->sessionModel->isLoggedIn() === false) {
 			$this->loginController->tryLoginWithCookies();
-			
+
 		} else {
 			$this->updateCookiePassword();
 			return $this->layoutView->render($this->sessionModel->isLoggedIn(), $this->loginView, $this->dateTime);
@@ -69,6 +66,7 @@ class MainController {
 		$cd = new \model\CookieDAL();
 		$c = new \model\Cookies($cd);
 
+		// Handles updating of cookiepassword, both client and DB.
 		if ($this->loginView->isCookieSet()) {
 			$storedCookie = $this->loginView->getStoredCookieInfo();
 			$oldpw = $storedCookie->cookiePassword;

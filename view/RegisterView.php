@@ -48,8 +48,11 @@ class RegisterView {
         return 'User exists, pick another username.';
     }
 
-    public function getNewUsercredentials() : \model\NewUser {
-        return new \model\NewUser($this->getRequestUsername(),
+    public function getNewUsercredentials() {
+        // return new \model\NewUser($this->getRequestUsername(),
+        //                           $this->getRequestPassword(),
+        //                           $this->getPasswordRepeat());
+        return new \model\User($this->getRequestUsername(),
                                   $this->getRequestPassword(),
                                   $this->getPasswordRepeat());
     }

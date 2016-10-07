@@ -8,6 +8,7 @@ require_once('model/UserDAL.php');
 require_once('model/SessionModel.php');
 require_once('model/Cookies.php');
 require_once('model/CookieDAL.php');
+require_once('model/Validation.php');
 
 
 class LoginController {
@@ -38,42 +39,37 @@ class LoginController {
 	public function login() {
 
 		$this->newUser = $this->loginView->getUserinformation();
-		$this->userDAL = new \model\UserDAL();
-		$this->users = new \model\Users($this->userDAL, $this->newUser);
+		// $this->userDAL = new \model\UserDAL();
+		// $this->users = new \model\Users($this->userDAL, $this->newUser);
+
+		$temp_validation = new \model\Validation($this->newUser, $this->sessionModel);
 
 		try {
-			$this->users->tryToLoginUser($this->sessionModel);
-
-			if ($this->loginView->wantsToStoreSession()) {
-				$this->setCookie();
-				$this->flashMessage->temp_setLoginFlash($this->loginView->welcomeAndRememberMessage());
-
-			} else {
-				$this->flashMessage->temp_setLoginFlash($this->loginView->welcomeMessage());
-			}
-
+			// $this->users->tryToLoginUser($this->sessionModel);
+			$temp_validation->tryLogin();
 		} catch (\error\UsernameMissingException $e) {
-			$this->flashMessage->temp_setLoginFlash($this->loginView->missingUsernameMessage());
-			return header('Location: '.$_SERVER['PHP_SELF']);
+			// $this->flashMessage->temp_setLoginFlash($this->loginView->missingUsernameMessage());
+			$this->flashMessage->temp_setLoginFlash($e->getMessage());
+			return $this->redirectToSelf();
 
 		} catch(\error\PasswordMissingException $e) {
 			$this->flashMessage->setLoginUsernameFlash($this->newUser->username);
-			$this->flashMessage->temp_setLoginFlash($this->loginView->missingPasswordMessage());
-			return header('Location: '.$_SERVER['PHP_SELF']);
+			// $this->flashMessage->temp_setLoginFlash($this->loginView->missingPasswordMessage());
+			$this->flashMessage->temp_setLoginFlash($e->getMessage());
+			return $this->redirectToSelf();
 
 		} catch (\error\NoSuchUserException $e) {
-			// $this->flashMessage->setLoginUsernameFlash($this->newUser->username);
-			// $this->flashMessage->setWrongCredentialsMessage();
 			$this->flashMessage->setLoginUsernameFlash($this->newUser->username);
-			$this->flashMessage->temp_setLoginFlash($this->loginView->wrongCredentialsMessage());
-			return header('Location: '.$_SERVER['PHP_SELF']);
-
+			// $this->flashMessage->temp_setLoginFlash($this->loginView->wrongCredentialsMessage());
+			$this->flashMessage->temp_setLoginFlash($e->getMessage());
+			return $this->redirectToSelf();
 		} catch (\error\AlreadyLoggedInException $e) {
 			return $this->layoutView->render(true, $this->loginView, $this->dateTimeView);
 		}
 
+		$this->setSuccessfulFlashMessage();
 		$this->sessionModel->login();
-		return header('Location: '.$_SERVER['PHP_SELF']);
+		return $this->redirectToSelf();
 	}
 
 	public function logout() {
@@ -88,7 +84,7 @@ class LoginController {
 			$this->cookies->removeCookies($this->loginView->getStoredCookieInfo());
 		}
 
-		header('Location: '.$_SERVER['PHP_SELF']);
+		$this->redirectToSelf();
 	}
 
 	public function tryLoginWithCookies() {
@@ -97,7 +93,7 @@ class LoginController {
 		if ($this->cookies->isStored($cookiePW) && $this->sessionModel->isLoggedIn() === false) {
 			$this->flashMessage->temp_setLoginFlash($this->loginView->backWithCookieMessage());
 			$this->sessionModel->login();
-			header('Location: '.$_SERVER['PHP_SELF']);
+			$this->redirectToSelf();
 		} else {
 			$this->layoutView->render($this->sessionModel->isLoggedIn(), $this->loginView, $this->dateTimeView);
 		}
@@ -107,5 +103,24 @@ class LoginController {
 		$cookie = $this->loginView->getCookieInfo();
 		$this->cookies->saveCookie($cookie);
 		$this->loginView->setClientCookie($cookie);
+	}
+
+	private function setSuccessfulFlashMessage() {
+		$this->loginView->wantsToStoreSession() ?
+			$this->setCookieAndCookieFlash() :
+			$this->setNormalLoginFlash();
+	}
+
+	private function setCookieAndCookieFlash() {
+		$this->setCookie();
+		$this->flashMessage->temp_setLoginFlash($this->loginView->welcomeAndRememberMessage());
+	}
+
+	private function setNormalLoginFlash() {
+		$this->flashMessage->temp_setLoginFlash($this->loginView->welcomeMessage());
+	}
+
+	private function redirectToSelf() {
+		header('Location: '.$_SERVER['PHP_SELF']);
 	}
 }

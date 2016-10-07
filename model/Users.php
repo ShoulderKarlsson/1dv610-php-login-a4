@@ -27,12 +27,40 @@ class Users {
 	private $userCredentials;
 	private $sessionModel;
 
-	public function __construct(UserDAL $db, $u) {
+	// public function __construct(UserDAL $db, $u) {
+	// 	$this->userDAL = $db;
+	// 	$this->userCredentials = $u;
+	// 	$this->getUsers();
+	// }
+	//
+
+	// TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEMP
+	public function __construct(UserDAL $db) {
 		$this->userDAL = $db;
-		$this->userCredentials = $u;
 		$this->getUsers();
 	}
 
+	public function temp_searchForUsername(string $username) : bool {
+		foreach ($this->users as $user) {
+			if ($user[self::$username] === $username) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public function temp_searchForUser(\model\User $user) {
+		foreach ($this->users as $storedUser) {
+			if ($storedUser[self::$username] === $user->username &&
+				$storedUser[self::$password] === $user->password) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+	/*
 	public function tryToLoginUser(SessionModel $sessionModel) {
 
 
@@ -81,8 +109,10 @@ class Users {
 		}
 	}
 
+	*/
+
 	// Ask about this [Using array since saving in json ($user[self::$password / self::$username])]
-	private function searchForUser() : bool {
+	public function searchForUser() : bool {
 		foreach ($this->users as $user) {
 			if ($user[self::$username] === $this->userCredentials->username &&
 				$user[self::$password] === $this->userCredentials->password) {
@@ -109,5 +139,9 @@ class Users {
 
 	public function addNewUser() {
 		$this->userDAL->addUser($this->users, $this->userCredentials);
+	}
+
+	public function temp_addNewUser(\model\User $u) {
+		$this->userDAL->addUser($this->users, $u);
 	}
 }
