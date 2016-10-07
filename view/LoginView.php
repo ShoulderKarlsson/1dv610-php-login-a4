@@ -27,44 +27,6 @@ class LoginView {
 				$this->usernameValue = $flashMessage->getLoginUsernameFlash();
 			}
 		}
-
-
-		// if ($flashMessage->isFlashSet()) {
-		// 	$this->message = $flashMessage->getFlashMessage();
-		//
-		// 	if ($flashMessage->isUsernameSet()) {
-		// 		$this->usernameValue = $flashMessage->getUsernameValueFlash();
-		// 	}
-		// }
-/*
-		if ($flashMessage->isUsernameFlash()) {
-			$this->message = $flashMessage->getUsernameFlash();
-
-		} else if ($flashMessage->isPasswordFlash()) {
-			$this->usernameValue = $flashMessage->getUsernameValueFlash();
-			$this->message = $flashMessage->getPasswordFlash();
-
-		} else if ($flashMessage->isCredentialsFlash()) {
-			$this->usernameValue = $flashMessage->getUsernameValueFlash();
-			$this->message = $flashMessage->getCredentialsFlash();
-
-		} else if ($flashMessage->isWelcomeFlash()) {
-			$this->message = $flashMessage->getWelcomeFlash();
-
-		}  else if ($flashMessage->isByeFlash()) {
-			$this->message = $flashMessage->getByeFlash();
-
-		} else if ($flashMessage->isNewUserFlash()) {
-			$this->message = $flashMessage->getNewUserFlash();
-			$this->usernameValue = $flashMessage->getUsernameValueFlash();
-
-		} else if ($flashMessage->isCookieRemeberFlash()) {
-			$this->message = $flashMessage->getCookieRememberFlash();
-
-		} else if ($flashMessage->isWelcomeBackFlash()) {
-			$this->message = $flashMessage->getWelcomeBackFlash();
-		}
-		*/
 	}
 	/**
 	 * Create HTTP response
@@ -76,14 +38,38 @@ class LoginView {
 	public function response() {
 		$active = new \model\SessionModel(); // Change this - send in as argument
 
-
-		if ($active->isLoggedIn()) {
-			return $this->generateLogoutButtonHTML($this->message);
-		} else {
-			return $this->generateLoginFormHTML($this->message);
-		}
+		return $active->isLoggedIn() ?
+			$this->generateLogoutButtonHTML($this->message) :
+			$this->generateLoginFormHTML($this->message);
 	}
 
+	public function missingUsernameMessage() : string {
+		return "Username is missing";
+	}
+
+	public function missingPasswordMessage() : string {
+		return "Password is missing";
+	}
+
+	public function wrongCredentialsMessage() : string {
+		return "Wrong name or password";
+	}
+
+	public function backWithCookieMessage() : string {
+		return "Welcome back with cookie.";
+	}
+
+	public function byeMessage() : string {
+		return "Bye bye!";
+	}
+
+	public function welcomeAndRememberMessage() : string {
+		return "Welcome and you will be remebered.";
+	}
+
+	public function welcomeMessage() : string {
+		return "Welcome";
+	}
 
 	public function getUserInformation() {
 		return new \model\User($this->getRequestUsername(), $this->getRequestPassword());
@@ -92,17 +78,6 @@ class LoginView {
 	public function getCookieInfo() {
 		return new \model\Cookie($this->getRequestUsername());
 	}
-
-	// If something goes wrong with tests and flashMessages - it might be these two
-	// If so is the case, change it.
-	// public function setUsernameFlash(\model\FlashMessageModel $flashMessage) {
-	// 	$flashMessage->setUsernameMessage();
-	// }
-
-	// public function setPasswordFlash(\model\FlashMessageModel $flashMessage) {
-	// 	$flashMessage->setPasswordMessage();
-	// 	$flashMessage->setUsernameValueFlash($this->getRequestUsername());
-	// }
 
 	public function setUsernameValue() {
 		$this->usernameValue = $this->getRequestUsername();

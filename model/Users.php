@@ -32,7 +32,7 @@ class Users {
 		$this->userCredentials = $u;
 		$this->getUsers();
 	}
-	
+
 	public function tryToLoginUser(SessionModel $sessionModel) {
 
 
@@ -60,16 +60,16 @@ class Users {
 
 	public function tryToRegisterUser() {
 
+		if (strlen($this->userCredentials->username) < 3) {
+			throw new \error\ShortUsernameException('Username has too few characters, at least 3 characters.');
+		}
+
 		if (strlen($this->userCredentials->password) < 6) {
-			throw new \error\ShortPasswordException('Password has too few characters, at least 6 characters.');
+			throw new \error\ShortPasswordException('Password has to few characters, atleast 6 characters.');
 		}
 
 		if (strcmp($this->userCredentials->password, $this->userCredentials->passwordRepeat) !== 0) {
 			throw new \error\NotMatchingPasswordException('Passwords do not match.');
-		}
-
-		if (strlen($this->userCredentials->username) < 3) {
-			throw new \error\ShortUsernameException('Username has too few characters, at least 3 characters.');
 		}
 
 		if ($this->searchForUsername() === true) {

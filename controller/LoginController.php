@@ -46,24 +46,31 @@ class LoginController {
 
 			if ($this->loginView->wantsToStoreSession()) {
 				$this->setCookie();
-				$this->flashMessage->setCookieWelcomeFlash();
+				// $this->flashMessage->setCookieWelcomeFlash();
+				$this->flashMessage->temp_setLoginFlash($this->loginView->welcomeAndRememberMessage());
 
 			} else {
-				$this->flashMessage->setWelcomeFlash();
+				// $this->flashMessage->setWelcomeFlash();
+				$this->flashMessage->temp_setLoginFlash($this->loginView->welcomeMessage());
 			}
 
 		} catch (\error\UsernameMissingException $e) {
-			$this->flashMessage->setUsernameMessage();
+			// $this->flashMessage->setUsernameMessage();
+			$this->flashMessage->temp_setLoginFlash($this->loginView->missingUsernameMessage());
 			return header('Location: '.$_SERVER['PHP_SELF']);
 
 		} catch(\error\PasswordMissingException $e) {
 			$this->flashMessage->setLoginUsernameFlash($this->newUser->username);
-			$this->flashMessage->setPasswordMessage();
+			$this->flashMessage->temp_setLoginFlash($this->loginView->missingPasswordMessage());
+			// $this->flashMessage->setLoginUsernameFlash($this->newUser->username);
+			// $this->flashMessage->setPasswordMessage();
 			return header('Location: '.$_SERVER['PHP_SELF']);
 
 		} catch (\error\NoSuchUserException $e) {
+			// $this->flashMessage->setLoginUsernameFlash($this->newUser->username);
+			// $this->flashMessage->setWrongCredentialsMessage();
 			$this->flashMessage->setLoginUsernameFlash($this->newUser->username);
-			$this->flashMessage->setWrongCredentialsMessage();
+			$this->flashMessage->temp_setLoginFlash($this->loginView->wrongCredentialsMessage());
 			return header('Location: '.$_SERVER['PHP_SELF']);
 
 		} catch (\error\AlreadyLoggedInException $e) {
@@ -78,7 +85,8 @@ class LoginController {
 
 		if ($this->sessionModel->isLoggedIn()) {
 			$this->sessionModel->logout();
-			$this->flashMessage->setByeFlash();
+			// $this->flashMessage->setByeFlash();
+			$this->flashMessage->temp_setLoginFlash($this->loginView->byeMessage());
 		}
 
 		if ($this->loginView->isCookieSet()) {
@@ -93,7 +101,8 @@ class LoginController {
 		$cookiePW = $this->loginView->getCookiePassword();
 
 		if ($this->cookies->isStored($cookiePW) && $this->sessionModel->isLoggedIn() === false) {
-			$this->flashMessage->setWelcomeBackFlash();
+			// $this->flashMessage->setWelcomeBackFlash();
+			$this->flashMessage->temp_setLoginFlash($this->loginView->backWithCookieMessage());
 			$this->sessionModel->login();
 			header('Location: '.$_SERVER['PHP_SELF']);
 		} else {

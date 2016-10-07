@@ -27,47 +27,49 @@ class RegisterController {
         try {
             $this->users->tryToRegisterUser();
         } catch (\error\ShortPasswordException $e) {
-            $this->flashMessageModel->setShortPasswordMessage();
+            // $this->flashMessageModel->setShortPasswordMessage();
+            $this->flashMessageModel->temp_setRegisterFlash($this->registerView->shortPasswordMessage());
             $this->flashMessageModel->setRegisterUsernameFlash($this->newUser->username);
-            // $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
-            $this->redirect();
+            $this->redirectToRegister();
             return;
 
         } catch (\error\NotMatchingPasswordException $e) {
-            $this->flashMessageModel->setNotMathingPasswordMessage();
+            // $this->flashMessageModel->setNotMathingPasswordMessage();
+            $this->flashMessageModel->temp_setRegisterFlash($this->registerView->notMatchingPasswordMessage());
             $this->flashMessageModel->setRegisterUsernameFlash($this->newUser->username);
-            // $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
-            $this->redirect();
+            $this->redirectToRegister();
             return;
         } catch (\error\ShortUsernameException $e) {
-            $this->flashMessageModel->setShortUsernameMessage();
+            // $this->flashMessageModel->setShortUsernameMessage();
+            $this->flashMessageModel->temp_setRegisterFlash($this->registerView->shortUsernameMessage());
             $this->flashMessageModel->setRegisterUsernameFlash($this->newUser->username);
-            // $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
-            $this->redirect();
+            $this->redirectToRegister();
             return;
 
         } catch (\error\BusyUsernameException $e) {
-            $this->flashMessageModel->setBusyUsernameMessage();
+            // $this->flashMessageModel->setBusyUsernameMessage();
+            $this->flashMessageModel->temp_setRegisterFlash($this->registerView->busyUsernameMessage());
             $this->flashMessageModel->setRegisterUsernameFlash($this->newUser->username);
-            // $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
-            $this->redirect();
+            $this->redirectToRegister();
             return;
 
         } catch (\error\ InvalidCharactersException $e) {
-            $this->flashMessageModel->setInvalidCharactersMessage();
+            // $this->flashMessageModel->setInvalidCharactersMessage();
+            $this->flashMessageModel->temp_setRegisterFlash($this->registerView->invalidCharactersMessage());
+            // $this->flashMessageModel->setRegisterUsernameFlash(strip_tags($this->newUser->username));
             $this->flashMessageModel->setRegisterUsernameFlash(strip_tags($this->newUser->username));
-            // $this->flashMessageModel->setUsernameValueFlash(strip_tags($this->newUser->username));
-            $this->redirect();
+            $this->redirectToRegister();
             return;
         }
 
         $this->users->addNewUser();
         $this->flashMessageModel->setLoginUsernameFlash($this->newUser->username);
-        $this->flashMessageModel->setNewRegisterMessage();
+        // $this->flashMessageModel->setNewRegisterMessage();
+        $this->flashMessageModel->temp_setLoginFlash($this->registerView->newUserMessage());
         header('Location: /');
     }
 
-    private function redirect() {
+    private function redirectToRegister() {
         header('Location: ?register');
     }
 }

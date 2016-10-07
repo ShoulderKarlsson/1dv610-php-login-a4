@@ -20,48 +20,33 @@ class RegisterView {
             if ($flashMessage->isRegisterUsername()) {
                 $this->username = $flashMessage->getRegisterUsernameFlash();
             }
-
-			// if ($flashMessage->isUsernameSet()) {
-			// 	$this->username = $flashMessage->getUsernameValueFlash();
-			// }
 		}
-
-    /*
-        if ($flashMessage->isShortPasswordFlash()) {
-            $this->message = $flashMessage->getShortPasswordFlash();
-            $this->username = $flashMessage->getUsernameValueFlash();
-
-        } else if ($flashMessage->isNotMatchingPasswordFlash()) {
-            $this->message = $flashMessage->getNotMatchingPasswordFlash();
-            $this->username = $flashMessage->getUsernameValueFlash();
-
-        } else if ($flashMessage->isShortUsernameFlash()) {
-            $this->message = $flashMessage->getShortUsernameFlash();
-            $this->username = $flashMessage->getUsernameValueFlash();
-
-        } else if ($flashMessage->isBusyUsernameFlash()) {
-            $this->message = $flashMessage->getBusyUsernameFlash();
-            $this->username = $flashMessage->getUsernameValueFlash();
-        } else if ($flashMessage->isInvalidFlash()) {
-            $this->message = $flashMessage->getInvalidFlash();
-            $this->username = $flashMessage->getUsernameValueFlash();
-        }
-        */
     }
 
 
-    private function getRequestUsername() : string {
-        return $_POST[self::$name];
+    public function shortPasswordMessage() : string {
+        return 'Password has too few characters, at least 6 characters.';
     }
 
-    private function getRequestPassword() : string {
-        return $_POST[self::$password];
+    public function notMatchingPasswordMessage() : string {
+        return 'Passwords do not match.';
     }
 
-    private function getPasswordRepeat() : string {
-        return $_POST[self::$passwordRepeat];
+    public function shortUsernameMessage() : string {
+        return 'Username has too few characters, at least 3 characters.';
     }
 
+    public function newUserMessage() : string {
+        return "Registered new user.";
+    }
+
+    public function invalidCharactersMessage() : string {
+        return 'Username contains invalid characters.';
+    }
+
+    public function busyUsernameMessage() : string {
+        return 'User exists, pick another username.';
+    }
 
     public function getNewUsercredentials() : \model\NewUser {
         return new \model\NewUser($this->getRequestUsername(),
@@ -96,5 +81,17 @@ class RegisterView {
                 </fieldset>
             </form>
         ';
+    }
+
+    private function getRequestUsername() : string {
+        return $_POST[self::$name];
+    }
+
+    private function getRequestPassword() : string {
+        return $_POST[self::$password];
+    }
+
+    private function getPasswordRepeat() : string {
+        return $_POST[self::$passwordRepeat];
     }
 }
