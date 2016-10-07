@@ -11,10 +11,10 @@ class Validation {
     public function __construct(\model\User $user, \model\SessionModel $sm) {
         $this->user = $user;
         $this->authenticationHandler = $sm;
-        $this->createObjects();
+        $this->getDALAndUsers();
     }
 
-    private function createObjects() {
+    private function getDALAndUsers() {
         $this->userDAL = new \model\userDAL();
         $this->users = new \model\Users($this->userDAL);
     }
@@ -36,7 +36,7 @@ class Validation {
 		if (empty($this->user->password)) {
 			throw new \error\PasswordMissingException('Password is missing![Validation]');
 		}
-        
+
 		// Not using message, keeping for logs.
 		if ($this->users->temp_searchForUser($this->user) === false) {
 			throw new \error\NoSuchUserException('Wrong name or password[Validation]');
