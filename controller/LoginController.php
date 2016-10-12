@@ -8,7 +8,6 @@ require_once('model/UserDAL.php');
 require_once('model/SessionModel.php');
 require_once('model/Cookies.php');
 require_once('model/CookieDAL.php');
-require_once('model/Validation.php');
 
 
 class LoginController {
@@ -106,7 +105,6 @@ class LoginController {
 			// return $this->redirectToSelf();
 
 
-		// Not sure what TODO here? Just render loggedin? =)
 		} catch (\error\AlreadyLoggedInException $e) {
 			return $this->layoutView->render(true, $this->loginView, $this->dateTimeView);
 

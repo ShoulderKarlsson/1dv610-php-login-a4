@@ -28,9 +28,6 @@ class RegisterView {
         return new \model\NewUser($this->getRequestUsername(),
                                   $this->getRequestPassword(),
                                   $this->getPasswordRepeat());
-        // return new \model\User($this->getRequestUsername(),
-        //                           $this->getRequestPassword(),
-        //                           $this->getPasswordRepeat());
     }
 
     public function wantsToAccsessRegister() : bool {

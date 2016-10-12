@@ -2,7 +2,6 @@
 
 namespace controller;
 
-require_once('model/Validation.php');
 require_once('model/SessionModel.php');
 
 class RegisterController {
@@ -33,7 +32,7 @@ class RegisterController {
         // $this->newUser = $this->registerView->getNewUsercredentials();
         // // $this->userDAL = new \model\UserDAL();
         // // $this->users = new \model\Users($this->userDAL, $this->newUser);
-        // $this->sessionModel = new \model\SessionModel(); // Används endast här, move?
+        // $this->sessionModel = new \model\SessionModel();
         // $temp_validation = new \model\Validation($this->newUser, $this->sessionModel);
         // #####################
 

@@ -27,9 +27,8 @@ class NewUser {
 
 
 
-    	// Strips HTML tags
-        $this->username = strip_tags($username);
-        
+        $this->username = strip_tags($username); // Strips HTML tags
+                
         $this->password = $password;
         $this->passwordRepeat = $passwordRepeat;
     }

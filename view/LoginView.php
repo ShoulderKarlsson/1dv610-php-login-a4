@@ -28,13 +28,8 @@ class LoginView {
 			}
 		}
 	}
-	/**
-	 * Create HTTP response
-	 *
-	 * Should be called after a login attempt has been determined
-	 *
-	 * @return  void BUT writes to standard output and cookies!
-	 */
+
+
 	public function response() {
 		$active = new \model\SessionModel(); // Change this - send in as argument
 
@@ -50,11 +45,6 @@ class LoginView {
 	public function getCookieInfo() {
 		return new \model\Cookie($this->getRequestUsername());
 	}
-
-	// Dont think I use this, test one more time for saftey
-	// public function setUsernameValue() {
-	// 	$this->usernameValue = $this->getRequestUsername();
-	// }
 
 	private function getRequestUsername() : string {
 		return $_POST[self::$name];
@@ -96,7 +86,7 @@ class LoginView {
 	}
 
 	public function setClientCookie(\model\Cookie $c) {
-		$duration = time() + 3600; // 1 Hour
+		$duration = time() + 3600; // 60 Minutes.
 		setcookie(self::$cookieName, $c->cookieName, $duration);
 		setcookie(self::$cookiePassword, $c->cookiePassword, $duration);
 	}
@@ -148,7 +138,7 @@ class LoginView {
 	public function temp_setWrongCredentialsMessage() {
 		$this->message = $this->wrongCredentialsMessage();
 	}
-	
+
 	public function temp_setUsername() {
 		$this->usernameValue = $this->getRequestUsername();
 	}

@@ -7,6 +7,9 @@ namespace model;
  * Represents a 'catalog' of cookieinformation
  */
 class Cookies {
+	private static $cookiePassword = 'cookiePassword';
+	private static $cookieTime = 'cookieTime';
+
 	private $cookieDAL;
 	private $storedCookies;
 
@@ -24,7 +27,7 @@ class Cookies {
 	public function replaceOldCookie(\model\Cookie $newCookie, $oldPw) {
 		$temp = array();
 		foreach($this->storedCookies as $cookie) {
-			if ($cookie['cookiePassword'] !== $oldPw) {
+			if ($cookie[self::$cookiePassword] !== $oldPw) {
 				$temp[] = $cookie;
 			}
 		}
@@ -48,7 +51,7 @@ class Cookies {
 
 	public function isStored(string $cookiePW) : bool {
 		foreach($this->storedCookies as $cookie) {
-			if ($cookie['cookiePassword'] === $cookiePW && $cookie['cookieTime'] > time()) { // STRING DEPENDENCIE
+			if ($cookie[self::$cookiePassword] === $cookiePW && $cookie[self::$cookieTime] > time()) {
 				return true;
 			}
 		}
@@ -59,7 +62,7 @@ class Cookies {
 	public function removeCookies(\model\Cookie $c) {
 		$temp = array();
 		foreach($this->storedCookies as $cookie) {
-			if ($cookie['cookiePassword'] !== $c->cookiePassword) { // STRING DEPENDENCIEEEEE
+			if ($cookie[self::$cookiePassword] !== $c->cookiePassword) { // STRING DEPENDENCIEEEEE
 				$temp[] = $cookie;
 			}
 		}

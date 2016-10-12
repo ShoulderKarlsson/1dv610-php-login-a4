@@ -11,9 +11,8 @@ class User {
 
 	public $username;
 	public $password;
-	public $passwordRepeat;
 
-	public function __construct(string $username, string $password, string $passwordRepeat = '') {
+	public function __construct(string $username, string $password) {
 
 		// Not using message, keeping for logs
 		if (empty($username)) {
@@ -28,6 +27,5 @@ class User {
 
 		$this->username = $username;
 		$this->password = $password;
-		$this->passwordRepeat = $passwordRepeat;
 	}
 }
