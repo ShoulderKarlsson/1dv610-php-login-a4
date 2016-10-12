@@ -62,6 +62,14 @@ class Users {
 		return false;
 	}
 
+	public function temp_searchForBusyUsernameWithException(\model\NewUser $newUser) {
+		foreach($this->users as $storedUser) {
+			if ($storedUser[self::$username] === $newUser->username) {
+				throw new \error\BusyUsernameException('Busy username!');
+			}
+		}
+	}
+
 	public function temp_searchForUserWithException(\model\User $user) {
 		foreach ($this->users as $storedUser) {
 			if ($storedUser[self::$username] === $user->username &&

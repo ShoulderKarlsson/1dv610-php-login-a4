@@ -9,9 +9,9 @@ class RegisterView {
 	private static $password = 'RegisterView::Password';
 	private static $passwordRepeat = 'RegisterView::PasswordRepeat';
 	private static $messageId = 'RegisterView::Message';
+    private static $register_get = 'register';
     private $message = '';
     private $username = '';
-    private static $register_get = 'register';
 
     public function __construct(\model\FlashMessageModel $flashMessage) {
         if ($flashMessage->isRegisterFlashSet()) {
@@ -64,7 +64,41 @@ class RegisterView {
     public function busyUsernameMessage() : string {
         return 'User exists, pick another username.';
     }
+
+
+    // #########################################################
+    // Functions below are used when testing without redirect!!
     
+    public function temp_shortUsernameMessage() {
+        $this->message = $this->shortUsernameMessage();
+    }
+
+    public function temp_setShortPassword() {
+        $this->message = $this->shortPasswordMessage();
+    }
+
+    public function temp_setNotMatchingPassword() {
+        $this->message = $this->notMatchingPasswordMessage();
+    }
+
+    public function temp_invalidCharactersMessage() {
+        $this->message = $this->invalidCharactersMessage();
+    }
+
+    public function temp_busyUsernameMessage() {
+        $this->message = $this->busyUsernameMessage();
+    }
+
+    public function temp_setUsername() {
+        $this->username = strip_tags($this->getRequestUsername());
+    }
+
+
+
+
+
+
+
     public function response() {
         return '
             <form method="post" action="?register" enctype="multipart/form-data">

@@ -148,7 +148,7 @@ class LoginView {
 	public function temp_setWrongCredentialsMessage() {
 		$this->message = $this->wrongCredentialsMessage();
 	}
-
+	
 	public function temp_setUsername() {
 		$this->usernameValue = $this->getRequestUsername();
 	}
