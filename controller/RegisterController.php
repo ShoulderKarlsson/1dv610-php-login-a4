@@ -139,8 +139,6 @@ class RegisterController {
         $ud = new \model\UserDAL();
         $users = new \model\Users($ud);
         $users->temp_addNewUser($this->newUser);
-
-        // $this->users->addNewUser();
         
         $this->flashMessageModel->setLoginUsernameFlash($this->newUser->username);
         $this->flashMessageModel->temp_setLoginFlash($this->registerView->newUserMessage());
