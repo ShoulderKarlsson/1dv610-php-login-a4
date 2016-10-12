@@ -43,6 +43,70 @@ class LoginView {
 			$this->generateLoginFormHTML($this->message);
 	}
 
+	public function getUserInformation() {
+		return new \model\User($this->getRequestUsername(), $this->getRequestPassword());
+	}
+
+	public function getCookieInfo() {
+		return new \model\Cookie($this->getRequestUsername());
+	}
+
+	// Dont think I use this, test one more time for saftey
+	// public function setUsernameValue() {
+	// 	$this->usernameValue = $this->getRequestUsername();
+	// }
+
+	private function getRequestUsername() : string {
+		return $_POST[self::$name];
+	}
+
+	private function getRequestPassword() : string {
+		return $_POST[self::$password];
+	}
+
+	private function getCookiename() : string {
+		return $_COOKIE[self::$cookieName];
+	}
+
+	public function getCookiePassword() : string {
+		return $_COOKIE[self::$cookiePassword];
+	}
+
+	public function getStoredCookieInfo() {
+		$c = new \model\Cookie($_COOKIE[self::$cookieName]);
+		$c->cookiePassword = $_COOKIE[self::$cookiePassword];
+
+		return $c;
+	}
+
+	public function wantsToLogin() : bool {
+		return isset($_POST[self::$password]) || isset($_POST[self::$name]);
+	}
+
+	public function wantsToLogout() : bool {
+		return isset($_POST[self::$logout]);
+	}
+
+	public function wantsToStoreSession() : bool {
+		return isset($_POST[self::$keep]);
+	}
+
+	public function isCookieSet() : bool {
+		return isset($_COOKIE[self::$cookieName]) && isset($_COOKIE[self::$cookiePassword]);
+	}
+
+	public function setClientCookie(\model\Cookie $c) {
+		$duration = time() + 3600; // 1 Hour
+		setcookie(self::$cookieName, $c->cookieName, $duration);
+		setcookie(self::$cookiePassword, $c->cookiePassword, $duration);
+	}
+
+
+	public function removeCookies() {
+		setcookie(self::$cookieName, '', time() - 10);
+		setcookie(self::$cookiePassword, '', time() - 10);
+	}
+
 	public function missingUsernameMessage() : string {
 		return "Username is missing";
 	}
@@ -71,68 +135,25 @@ class LoginView {
 		return "Welcome";
 	}
 
-	public function getUserInformation() {
-		return new \model\User($this->getRequestUsername(), $this->getRequestPassword());
+	// #########################################################
+	// Functions below are used when testing without redirect!!
+	public function temp_setUsernameIsMissingMessage() {
+		$this->message = $this->missingUsernameMessage();
 	}
 
-	public function getCookieInfo() {
-		return new \model\Cookie($this->getRequestUsername());
+	public function temp_setPasswordMissingMessage() {
+		$this->message = $this->missingPasswordMessage();
 	}
 
-	public function setUsernameValue() {
+	public function temp_setWrongCredentialsMessage() {
+		$this->message = $this->wrongCredentialsMessage();
+	}
+
+	public function temp_setUsername() {
 		$this->usernameValue = $this->getRequestUsername();
 	}
 
-	private function getRequestUsername() : string {
-		return $_POST[self::$name];
-	}
 
-	private function getRequestPassword() : string {
-		return $_POST[self::$password];
-	}
-
-	private function getCookiename() : string {
-		return $_COOKIE[self::$cookieName];
-	}
-
-	public function getCookiePassword() : string {
-		return $_COOKIE[self::$cookiePassword];
-	}
-
-	public function getStoredCookieInfo() {
-		$nc = new \model\Cookie($_COOKIE[self::$cookieName]);
-		$nc->cookiePassword = $_COOKIE[self::$cookiePassword];
-
-		return $nc;
-	}
-
-	public function wantsToLogin() : bool {
-		return isset($_POST[self::$password]) || isset($_POST[self::$name]);
-	}
-
-	public function wantsToLogout() : bool {
-		return isset($_POST[self::$logout]);
-	}
-
-	public function wantsToStoreSession() : bool {
-		return isset($_POST[self::$keep]);
-	}
-
-	public function isCookieSet() : bool {
-		return isset($_COOKIE[self::$cookieName]) && isset($_COOKIE[self::$cookiePassword]);
-	}
-
-	public function setClientCookie(\model\Cookie $c) {
-		$duration = time() + 3600;
-		setcookie(self::$cookieName, $c->cookieName, $duration);
-		setcookie(self::$cookiePassword, $c->cookiePassword, $duration);
-	}
-
-
-	public function removeCookies() {
-		setcookie(self::$cookieName, '', time() - 10);
-		setcookie(self::$cookiePassword, '', time() - 10);
-	}
 
 	/**
 	* Generate HTML code on the output buffer for the logout button

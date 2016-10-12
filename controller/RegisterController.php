@@ -30,8 +30,11 @@ class RegisterController {
         $this->newUser = $this->registerView->getNewUsercredentials();
         // $this->userDAL = new \model\UserDAL();
         // $this->users = new \model\Users($this->userDAL, $this->newUser);
-        $this->sessionModel = new \model\SessionModel();
+        
+        
+        $this->sessionModel = new \model\SessionModel(); // Används endast här, move?
         $temp_validation = new \model\Validation($this->newUser, $this->sessionModel);
+        
 
         try {
             // $this->users->tryToRegisterUser();
@@ -49,6 +52,7 @@ class RegisterController {
             $this->flashMessageModel->setRegisterUsernameFlash($this->newUser->username);
             $this->redirectToRegister();
             return;
+
         } catch (\error\ShortUsernameException $e) {
             // $this->flashMessageModel->temp_setRegisterFlash($this->registerView->shortUsernameMessage());
             $this->flashMessageModel->temp_setRegisterFlash($e->getMessage());
@@ -73,7 +77,9 @@ class RegisterController {
         $ud = new \model\UserDAL();
         $users = new \model\Users($ud);
         $users->temp_addNewUser($this->newUser);
+
         // $this->users->addNewUser();
+        
         $this->flashMessageModel->setLoginUsernameFlash($this->newUser->username);
         $this->flashMessageModel->temp_setLoginFlash($this->registerView->newUserMessage());
         header('Location: /');

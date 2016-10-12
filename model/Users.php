@@ -40,6 +40,7 @@ class Users {
 		$this->getUsers();
 	}
 
+
 	public function temp_searchForUsername(string $username) : bool {
 		foreach ($this->users as $user) {
 			if ($user[self::$username] === $username) {
@@ -60,58 +61,19 @@ class Users {
 
 		return false;
 	}
-	/*
-	public function tryToLoginUser(SessionModel $sessionModel) {
 
-
-		// If the user tries to login when already logged in.
-		// Not using message, keeping for logs.
-		if ($sessionModel->isLoggedIn()) {
-			throw new \error\AlreadyLoggedInException('Already logged in.');
-		}
-
-		// Not using message, keeping for logs
-		if (empty($this->userCredentials->username)) {
-			throw new \error\UsernameMissingException('Username is missing!');
-		}
-
-		// Not using message, keeping for logs
-		if (empty($this->userCredentials->password)) {
-			throw new \error\PasswordMissingException('Password is missing!');
+	public function temp_searchForUserWithException(\model\User $user) {
+		foreach ($this->users as $storedUser) {
+			if ($storedUser[self::$username] === $user->username &&
+				$storedUser[self::$password] === $user->password) {
+				return true;
+			}
 		}
 
 		// Not using message, keeping for logs.
-		if ($this->searchForUser() === false) {
-			throw new \error\NoSuchUserException('Wrong name or password');
-		}
+		throw new \error\NoSuchUserException('Wrong name or password');
 	}
 
-	public function tryToRegisterUser() {
-
-		if (strlen($this->userCredentials->username) < 3) {
-			throw new \error\ShortUsernameException('Username has too few characters, at least 3 characters.');
-		}
-
-		if (strlen($this->userCredentials->password) < 6) {
-			throw new \error\ShortPasswordException('Password has to few characters, atleast 6 characters.');
-		}
-
-		if (strcmp($this->userCredentials->password, $this->userCredentials->passwordRepeat) !== 0) {
-			throw new \error\NotMatchingPasswordException('Passwords do not match.');
-		}
-
-		if ($this->searchForUsername() === true) {
-			throw new \error\BusyUsernameException('User exists, pick another username.');
-		}
-
-		if ($this->userCredentials->username !== strip_tags($this->userCredentials->username)) {
-			throw new \error\InvalidCharactersException('Username contains invalid characters.');
-		}
-	}
-
-	*/
-
-	// Ask about this [Using array since saving in json ($user[self::$password / self::$username])]
 	public function searchForUser() : bool {
 		foreach ($this->users as $user) {
 			if ($user[self::$username] === $this->userCredentials->username &&

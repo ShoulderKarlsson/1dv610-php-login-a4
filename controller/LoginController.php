@@ -38,33 +38,78 @@ class LoginController {
 
 	public function login() {
 
-		$this->newUser = $this->loginView->getUserinformation();
+		// Uncomment this for old implementation
+		// $this->newUser = $this->loginView->getUserinformation();
+
 		// $this->userDAL = new \model\UserDAL();
 		// $this->users = new \model\Users($this->userDAL, $this->newUser);
 
-		$temp_validation = new \model\Validation($this->newUser, $this->sessionModel);
+		// Uncomment this for old implementation
+		// $temp_validation = new \model\Validation($this->newUser, $this->sessionModel);
+		// 
+		
+		$this->userDAL = new \model\UserDAL();
+		$this->users = new \model\Users($this->userDAL);
 
 		try {
 			// $this->users->tryToLoginUser($this->sessionModel);
-			$temp_validation->tryLogin();
+
+			// Collects user that wants to login from view
+			$this->newUser = $this->loginView->getUserinformation();
+
+			// Searches for the user if it exists
+			$this->users->temp_searchForUserWithException($this->newUser);
+
+			// Checks if the user is already logged in.
+			$this->sessionModel->temp_alreadyLoggedIn();
+
+
+			// Uncomment this for old implementation
+			// $temp_validation->tryLogin();
 		} catch (\error\UsernameMissingException $e) {
+			$this->loginView->temp_setUsernameIsMissingMessage();
+			return $this->layoutView->render($this->sessionModel->isLoggedIn(), $this->loginView, $this->dateTimeView);
+
+			/**
+			 * Old implementation
+			 */
 			// $this->flashMessage->temp_setLoginFlash($this->loginView->missingUsernameMessage());
-			$this->flashMessage->temp_setLoginFlash($e->getMessage());
-			return $this->redirectToSelf();
+			// $this->flashMessage->temp_setLoginFlash($e->getMessage());
+			// return $this->redirectToSelf();
 
 		} catch(\error\PasswordMissingException $e) {
-			$this->flashMessage->setLoginUsernameFlash($this->newUser->username);
+			$this->loginView->temp_setPasswordMissingMessage();
+			$this->loginView->temp_setUsername();
+			return $this->layoutView->render($this->sessionModel->isLoggedIn(), $this->loginView, $this->dateTimeView);
+
+
+			/**
+			 * Old implementation below
+			 */
+			// $this->flashMessage->setLoginUsernameFlash($this->newUser->username);
 			// $this->flashMessage->temp_setLoginFlash($this->loginView->missingPasswordMessage());
-			$this->flashMessage->temp_setLoginFlash($e->getMessage());
-			return $this->redirectToSelf();
+			// $this->flashMessage->temp_setLoginFlash($e->getMessage());
+			// return $this->redirectToSelf();
 
 		} catch (\error\NoSuchUserException $e) {
-			$this->flashMessage->setLoginUsernameFlash($this->newUser->username);
-			// $this->flashMessage->temp_setLoginFlash($this->loginView->wrongCredentialsMessage());
-			$this->flashMessage->temp_setLoginFlash($e->getMessage());
-			return $this->redirectToSelf();
+			$this->loginView->temp_setWrongCredentialsMessage();
+			$this->loginView->temp_setUsername();
+			return $this->layoutView->render($this->sessionModel->isLoggedIn
+				(), $this->loginView, $this->dateTimeView);
+
+			/**
+			 * Old implementation
+			 */
+			// $this->flashMessage->setLoginUsernameFlash($this->newUser->username);
+			// // $this->flashMessage->temp_setLoginFlash($this->loginView->wrongCredentialsMessage());
+			// $this->flashMessage->temp_setLoginFlash($e->getMessage());
+			// return $this->redirectToSelf();
+
+
+		// Not sure what TODO here? Just render loggedin? =)
 		} catch (\error\AlreadyLoggedInException $e) {
 			return $this->layoutView->render(true, $this->loginView, $this->dateTimeView);
+
 		}
 
 		$this->setSuccessfulFlashMessage();

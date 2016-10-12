@@ -2,6 +2,9 @@
 
 namespace model;
 
+/**
+ * Handles all writing to cookies.json
+ */
 class CookieDAL {
 	private static $FILE_NAME = 'db/cookies.json';
 

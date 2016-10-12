@@ -8,7 +8,8 @@ class Validation {
     private $userDAL;
 
 
-    public function __construct(\model\User $user, \model\SessionModel $sm) {
+    // public function __construct(\model\User $user, \model\SessionModel $sm) {
+    public function __construct(\model\NewUser $user, \model\SessionModel $sm) {
         $this->user = $user;
         $this->authenticationHandler = $sm;
         $this->getDALAndUsers();

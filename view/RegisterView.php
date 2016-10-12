@@ -24,7 +24,24 @@ class RegisterView {
     }
 
 
-    public function shortPasswordMessage() : string {
+    public function getNewUsercredentials() {
+        return new \model\NewUser($this->getRequestUsername(),
+                                  $this->getRequestPassword(),
+                                  $this->getPasswordRepeat());
+        // return new \model\User($this->getRequestUsername(),
+        //                           $this->getRequestPassword(),
+        //                           $this->getPasswordRepeat());
+    }
+
+    public function wantsToAccsessRegister() : bool {
+        return isset($_GET[self::$register_get]);
+    }
+
+    public function wantsToRegister() : bool {
+        return isset($_POST[self::$name]) && isset($_POST[self::$password]) && isset($_POST[self::$passwordRepeat]);
+    }
+
+        public function shortPasswordMessage() : string {
         return 'Password has too few characters, at least 6 characters.';
     }
 
@@ -47,24 +64,7 @@ class RegisterView {
     public function busyUsernameMessage() : string {
         return 'User exists, pick another username.';
     }
-
-    public function getNewUsercredentials() {
-        // return new \model\NewUser($this->getRequestUsername(),
-        //                           $this->getRequestPassword(),
-        //                           $this->getPasswordRepeat());
-        return new \model\User($this->getRequestUsername(),
-                                  $this->getRequestPassword(),
-                                  $this->getPasswordRepeat());
-    }
-
-    public function wantsToAccsessRegister() : bool {
-        return isset($_GET[self::$register_get]);
-    }
-
-    public function wantsToRegister() : bool {
-        return isset($_POST[self::$name]) && isset($_POST[self::$password]) && isset($_POST[self::$passwordRepeat]);
-    }
-
+    
     public function response() {
         return '
             <form method="post" action="?register" enctype="multipart/form-data">

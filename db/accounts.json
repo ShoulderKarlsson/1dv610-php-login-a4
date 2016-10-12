@@ -1,14 +1,1 @@
-[
-    {
-        "username": "Admin",
-        "password": "Password"
-    },
-    {
-        "username": "username123",
-        "password": "username123"
-    },
-    {
-        "username": "newuser",
-        "password": "username123"
-    }
-]
+[{"username":"Admin","password":"Password"},{"username":"username123","password":"username123"},{"username":"newuser","password":"username123"},{"username":"username1231231231231232131231231","password":"username123"}]

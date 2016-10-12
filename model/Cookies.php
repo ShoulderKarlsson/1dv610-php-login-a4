@@ -48,7 +48,7 @@ class Cookies {
 
 	public function isStored(string $cookiePW) : bool {
 		foreach($this->storedCookies as $cookie) {
-			if ($cookie['cookiePassword'] === $cookiePW && $cookie['cookieTime'] > time()) {
+			if ($cookie['cookiePassword'] === $cookiePW && $cookie['cookieTime'] > time()) { // STRING DEPENDENCIE
 				return true;
 			}
 		}
@@ -59,7 +59,7 @@ class Cookies {
 	public function removeCookies(\model\Cookie $c) {
 		$temp = array();
 		foreach($this->storedCookies as $cookie) {
-			if ($cookie['cookiePassword'] !== $c->cookiePassword) {
+			if ($cookie['cookiePassword'] !== $c->cookiePassword) { // STRING DEPENDENCIEEEEE
 				$temp[] = $cookie;
 			}
 		}

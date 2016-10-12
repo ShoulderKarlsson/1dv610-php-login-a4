@@ -28,7 +28,7 @@ class MainController {
 		$this->flashMessage = new \model\FlashMessageModel();
 		$this->dateTime = new \view\DateTimeView();
 		$this->layoutView = new \view\LayoutView();
-		$this->sessionModel = new \model\sessionModel();
+		$this->sessionModel = new \model\SessionModel(); // Was lower case before, why?
 		$this->loginView = new \view\LoginView($this->flashMessage);
 		$this->registerView = new \view\RegisterView($this->flashMessage);
 		$this->registerController = new \controller\RegisterController($this->registerView, $this->layoutView, $this->dateTime, $this->flashMessage);
@@ -66,7 +66,7 @@ class MainController {
 		$cd = new \model\CookieDAL();
 		$c = new \model\Cookies($cd);
 
-		// Handles updating of cookiepassword, both client and DB.
+		// Updates Cookie password, client and DB
 		if ($this->loginView->isCookieSet()) {
 			$storedCookie = $this->loginView->getStoredCookieInfo();
 			$oldpw = $storedCookie->cookiePassword;

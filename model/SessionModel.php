@@ -17,4 +17,18 @@ class SessionModel {
 	public function logout() {
 		unset($_SESSION[self::$isLoggedIn]);
 	}
+
+	public function temp_alreadyLoggedIn() {
+		if ($this->isLoggedIn()) {
+
+			// Not using message, keeping for logs
+			throw new \error\AlreadyLoggedInException('Already logged in!');
+		}
+	}
 }
+
+
+
+/**
+ * TESTING WITH NEW IMPLEMENTAITON - VALIDATION ON DIFFERENT PLACES YO
+ */
