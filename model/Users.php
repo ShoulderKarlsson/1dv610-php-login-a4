@@ -16,30 +16,17 @@ require_once('exceptions/InvalidCharactersException.php');
 
 
 class Users {
-
-
 	private static $username = 'username';
 	private static $password = 'password';
-
-
 	private $users = array();
 	private $userDAL;
 	private $userCredentials;
 	private $sessionModel;
 
-	// public function __construct(UserDAL $db, $u) {
-	// 	$this->userDAL = $db;
-	// 	$this->userCredentials = $u;
-	// 	$this->getUsers();
-	// }
-	//
-
-	// TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEMP
 	public function __construct(UserDAL $db) {
 		$this->userDAL = $db;
 		$this->getUsers();
 	}
-
 
 	public function temp_searchForUsername(string $username) : bool {
 		foreach ($this->users as $user) {

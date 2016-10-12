@@ -2,6 +2,10 @@
 
 namespace model;
 
+
+/** 
+ * Handles all reading and writing to accounts.json
+ */
 class UserDAL {
 
 	private static $FILE_NAME = 'db/accounts.json';

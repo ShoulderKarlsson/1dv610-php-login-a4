@@ -13,15 +13,15 @@ class RegisterView {
     private $message = '';
     private $username = '';
 
-    public function __construct(\model\FlashMessageModel $flashMessage) {
-        if ($flashMessage->isRegisterFlashSet()) {
-			$this->message = $flashMessage->getRegisterFlashMessage();
+  //   public function __construct(\model\FlashMessageModel $flashMessage) {
+  //       if ($flashMessage->isRegisterFlashSet()) {
+		// 	$this->message = $flashMessage->getRegisterFlashMessage();
 
-            if ($flashMessage->isRegisterUsername()) {
-                $this->username = $flashMessage->getRegisterUsernameFlash();
-            }
-		}
-    }
+  //           if ($flashMessage->isRegisterUsername()) {
+  //               $this->username = $flashMessage->getRegisterUsernameFlash();
+  //           }
+		// }
+  //   }
 
 
     public function getNewUsercredentials() {
