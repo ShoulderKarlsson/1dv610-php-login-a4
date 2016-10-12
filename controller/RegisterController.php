@@ -89,6 +89,7 @@ class RegisterController {
             // return;
 
         } catch (\error\ShortUsernameException $e) {
+            $this->registerView->temp_setUsername();
             $this->registerView->temp_shortUsernameMessage();
             $this->layoutView->renderRegister(false, $this->registerView, $this->dateTimeView);
             return;

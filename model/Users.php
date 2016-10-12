@@ -111,7 +111,7 @@ class Users {
 		$this->userDAL->addUser($this->users, $this->userCredentials);
 	}
 
-	public function temp_addNewUser(\model\User $u) {
+	public function temp_addNewUser(\model\NewUser $u) {
 		$this->userDAL->addUser($this->users, $u);
 	}
 }
