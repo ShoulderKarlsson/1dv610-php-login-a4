@@ -42,10 +42,8 @@ class RegisterController {
 
         try {
 
-            // Validation in view -> Username, Password and PasswordRepeat 
             $this->newUser = $this->registerView->getNewUsercredentials();
 
-            // Validation regarding if the user exists in DB
             $this->users->temp_searchForBusyUsernameWithException($this->newUser);
 
 
@@ -116,7 +114,7 @@ class RegisterController {
             // $this->flashMessageModel->temp_setRegisterFlash($e->getMessage());
             // $this->flashMessageModel->setRegisterUsernameFlash($this->newUser->username);
             // $this->redirectToRegister();
-            return;
+            // return;
 
         } catch (\error\ InvalidCharactersException $e) {
             $this->registerView->temp_invalidCharactersMessage();
@@ -144,6 +142,7 @@ class RegisterController {
         header('Location: /');
     }
 
+    // Not using?
     private function redirectToRegister() {
         header('Location: ?register');
     }

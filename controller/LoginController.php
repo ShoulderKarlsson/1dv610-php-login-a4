@@ -39,13 +39,8 @@ class LoginController {
 
 		// Uncomment this for old implementation
 		// $this->newUser = $this->loginView->getUserinformation();
-
 		// $this->userDAL = new \model\UserDAL();
 		// $this->users = new \model\Users($this->userDAL, $this->newUser);
-
-		// Uncomment this for old implementation
-		// $temp_validation = new \model\Validation($this->newUser, $this->sessionModel);
-		// 
 		
 		$this->userDAL = new \model\UserDAL();
 		$this->users = new \model\Users($this->userDAL);
@@ -53,18 +48,12 @@ class LoginController {
 		try {
 			// $this->users->tryToLoginUser($this->sessionModel);
 
-			// Collects user that wants to login from view
 			$this->newUser = $this->loginView->getUserinformation();
 
-			// Searches for the user if it exists
 			$this->users->temp_searchForUserWithException($this->newUser);
 
-			// Checks if the user is already logged in.
 			$this->sessionModel->temp_alreadyLoggedIn();
 
-
-			// Uncomment this for old implementation
-			// $temp_validation->tryLogin();
 		} catch (\error\UsernameMissingException $e) {
 			$this->loginView->temp_setUsernameIsMissingMessage();
 			return $this->layoutView->render($this->sessionModel->isLoggedIn(), $this->loginView, $this->dateTimeView);

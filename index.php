@@ -8,7 +8,9 @@ $mc = new \controller\MainController();
 return $mc->init();
 
 /**
- * TODO: Handle string dependencie in Cookies
  * TODO: Check if there is something that is not used
- * TODO: Move files so they cant be accsessd
+ * TODO: Move database files so they cant be accsessd
+ * TODO: Try to use objects instead of array key/value pair when getting 				information from DB
+ *
+ * TODO: Remove unused methods in Users, alot of duplicates.
  */

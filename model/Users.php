@@ -4,15 +4,15 @@ namespace model;
 
 
 require_once('SessionModel.php');
-require_once('exceptions/NoSuchUserException.php');
 require_once('exceptions/AlreadyLoggedInException.php');
 require_once('exceptions/UsernameMissingException.php');
 require_once('exceptions/PasswordMissingException.php');
 require_once('exceptions/ShortPasswordException.php');
 require_once('exceptions/ShortUsernameException.php');
 require_once('exceptions/NotMatchingPasswordException.php');
-require_once('exceptions/BusyUsernameException.php');
 require_once('exceptions/InvalidCharactersException.php');
+require_once('exceptions/BusyUsernameException.php');
+require_once('exceptions/NoSuchUserException.php');
 
 
 class Users {
@@ -52,7 +52,7 @@ class Users {
 	public function temp_searchForBusyUsernameWithException(\model\NewUser $newUser) {
 		foreach($this->users as $storedUser) {
 			if ($storedUser[self::$username] === $newUser->username) {
-				throw new \error\BusyUsernameException('Busy username!');
+				throw new \error\BusyUsernameException('User exists, pick another username');
 			}
 		}
 	}
@@ -65,7 +65,6 @@ class Users {
 			}
 		}
 
-		// Not using message, keeping for logs.
 		throw new \error\NoSuchUserException('Wrong name or password');
 	}
 
