@@ -42,10 +42,6 @@ class LoginController {
 
 		try {
 			$this->tryLoginUser();
-			// $this->newUser = $this->loginView->getUserinformation();
-			// $this->users->temp_searchForUserWithException($this->newUser);
-			// $this->sessionModel->temp_alreadyLoggedIn();
-
 		} catch (\error\UsernameMissingException $e) {
 			$this->loginView->temp_setUsernameIsMissingMessage();
 			return $this->renderLogin();
@@ -61,14 +57,6 @@ class LoginController {
 			return $this->renderLogin();
 
 		} 
-		// catch (\error\AlreadyLoggedInException $e) {
-		// 	return $this->renderLogin();
-
-		// }
-
-		// $this->setSuccessfulFlashMessage();
-		// $this->sessionModel->login();
-		// return $this->redirectToSelf();
 	}
 
 	public function logout() {

@@ -28,27 +28,28 @@ class Users {
 		$this->getUsers();
 	}
 
-	public function temp_searchForUsername(string $username) : bool {
-		foreach ($this->users as $user) {
-			if ($user[self::$username] === $username) {
-				return true;
-			}
-		}
+	// public function temp_searchForUsername(string $username) : bool {
+	// 	foreach ($this->users as $user) {
+	// 		if ($user[self::$username] === $username) {
+	// 			return true;
+	// 		}
+	// 	}
 
-		return false;
-	}
+	// 	return false;
+	// }
 
-	public function temp_searchForUser(\model\User $user) {
-		foreach ($this->users as $storedUser) {
-			if ($storedUser[self::$username] === $user->username &&
-				$storedUser[self::$password] === $user->password) {
-				return true;
-			}
-		}
+	// public function temp_searchForUser(\model\User $user) {
+	// 	foreach ($this->users as $storedUser) {
+	// 		if ($storedUser[self::$username] === $user->username &&
+	// 			$storedUser[self::$password] === $user->password) {
+	// 			return true;
+	// 		}
+	// 	}
 
-		return false;
-	}
+	// 	return false;
+	// }
 
+	// Using
 	public function temp_searchForBusyUsernameWithException(\model\NewUser $newUser) {
 		foreach($this->users as $storedUser) {
 			if ($storedUser[self::$username] === $newUser->username) {
@@ -57,6 +58,7 @@ class Users {
 		}
 	}
 
+	// Using
 	public function temp_searchForUserWithException(\model\User $user) {
 		foreach ($this->users as $storedUser) {
 			if ($storedUser[self::$username] === $user->username &&
@@ -68,34 +70,34 @@ class Users {
 		throw new \error\NoSuchUserException('Wrong name or password');
 	}
 
-	public function searchForUser() : bool {
-		foreach ($this->users as $user) {
-			if ($user[self::$username] === $this->userCredentials->username &&
-				$user[self::$password] === $this->userCredentials->password) {
-				return true;
-			}
-		}
+	// public function searchForUser() : bool {
+	// 	foreach ($this->users as $user) {
+	// 		if ($user[self::$username] === $this->userCredentials->username &&
+	// 			$user[self::$password] === $this->userCredentials->password) {
+	// 			return true;
+	// 		}
+	// 	}
 
-		return false;
-	}
+	// 	return false;
+	// }
 
-	private function searchForUsername() : bool {
-		foreach ($this->users as $user) {
-			if ($user[self::$username] === $this->userCredentials->username) {
-				return true;
-			}
-		}
+	// private function searchForUsername() : bool {
+	// 	foreach ($this->users as $user) {
+	// 		if ($user[self::$username] === $this->userCredentials->username) {
+	// 			return true;
+	// 		}
+	// 	}
 
-		return false;
-	}
+	// 	return false;
+	// }
 
 	private function getUsers() {
 		$this->users = $this->userDAL->collectUsers();
 	}
 
-	public function addNewUser() {
-		$this->userDAL->addUser($this->users, $this->userCredentials);
-	}
+	// public function addNewUser() {
+	// 	$this->userDAL->addUser($this->users, $this->userCredentials);
+	// }
 
 	public function temp_addNewUser(\model\NewUser $u) {
 		$this->userDAL->addUser($this->users, $u);
