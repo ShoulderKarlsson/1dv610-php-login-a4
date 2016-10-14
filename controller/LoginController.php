@@ -128,9 +128,15 @@ class LoginController {
 	private function tryLoginUser() {
 		$this->newUser = $this->loginView->getUserinformation();
 		$this->users->temp_searchForUserWithException($this->newUser);
+		if (!$this->sessionModel->isLoggedIn()) {
+			$this->setWelcomeAndLogin();
+		}
+	}
+
+	private function setWelcomeAndLogin() {
 		$this->setSuccessfulFlashMessage();
 		$this->sessionModel->login();
-		$this->redirectToSelf();
+		$this->redirectToSelf();	
 	}
 
 	// Move to view?
