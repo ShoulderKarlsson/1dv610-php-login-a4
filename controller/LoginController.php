@@ -136,7 +136,8 @@ class LoginController {
 	private function setWelcomeAndLogin() {
 		$this->setSuccessfulFlashMessage();
 		$this->sessionModel->login();
-		$this->redirectToSelf();	
+		$this->redirectToSelf();
+		$this->renderLogin();
 	}
 
 	// Move to view?
