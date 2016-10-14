@@ -23,8 +23,36 @@ class RegisterView {
         return isset($_GET[self::$register_get]);
     }
 
+    public function newUserMessage() : string {
+        return "Registered new user.";
+    }
+
     public function wantsToRegister() : bool {
         return isset($_POST[self::$name]) && isset($_POST[self::$password]) && isset($_POST[self::$passwordRepeat]);
+    }
+
+    public function setShortUsernameMessage() {
+        $this->message = $this->shortUsernameMessage();
+    }
+
+    public function setShortPassword() {
+        $this->message = $this->shortPasswordMessage();
+    }
+
+    public function setNotMatchingPassword() {
+        $this->message = $this->notMatchingPasswordMessage();
+    }
+
+    public function setInvalidCharactersMessage() {
+        $this->message = $this->invalidCharactersMessage();
+    }
+
+    public function setBusyUsernameMessage() {
+        $this->message = $this->busyUsernameMessage();
+    }
+
+    public function setUsername() {
+        $this->username = strip_tags($this->getRequestUsername());
     }
 
     private function shortPasswordMessage() : string {
@@ -39,9 +67,6 @@ class RegisterView {
         return 'Username has too few characters, at least 3 characters.';
     }
 
-    public function newUserMessage() : string {
-        return "Registered new user.";
-    }
 
     private function invalidCharactersMessage() : string {
         return 'Username contains invalid characters.';
@@ -51,28 +76,16 @@ class RegisterView {
         return 'User exists, pick another username.';
     }
 
-    public function temp_shortUsernameMessage() {
-        $this->message = $this->shortUsernameMessage();
+    private function getRequestUsername() : string {
+        return $_POST[self::$name];
     }
 
-    public function temp_setShortPassword() {
-        $this->message = $this->shortPasswordMessage();
+    private function getRequestPassword() : string {
+        return $_POST[self::$password];
     }
 
-    public function temp_setNotMatchingPassword() {
-        $this->message = $this->notMatchingPasswordMessage();
-    }
-
-    public function temp_invalidCharactersMessage() {
-        $this->message = $this->invalidCharactersMessage();
-    }
-
-    public function temp_busyUsernameMessage() {
-        $this->message = $this->busyUsernameMessage();
-    }
-
-    public function temp_setUsername() {
-        $this->username = strip_tags($this->getRequestUsername());
+    private function getPasswordRepeat() : string {
+        return $_POST[self::$passwordRepeat];
     }
 
     public function response() {
@@ -94,17 +107,5 @@ class RegisterView {
                 </fieldset>
             </form>
         ';
-    }
-
-    private function getRequestUsername() : string {
-        return $_POST[self::$name];
-    }
-
-    private function getRequestPassword() : string {
-        return $_POST[self::$password];
-    }
-
-    private function getPasswordRepeat() : string {
-        return $_POST[self::$passwordRepeat];
     }
 }

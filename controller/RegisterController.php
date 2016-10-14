@@ -32,27 +32,22 @@ class RegisterController {
         try {
             return $this->tryRegisterUser();
         } catch (\error\ShortPasswordException $e) {
-            $this->registerView->temp_setShortPassword();
-            // $this->registerView->temp_setUsername();
+            $this->registerView->setShortPassword();
 
         } catch (\error\NotMatchingPasswordException $e) {
-            $this->registerView->temp_setNotMatchingPassword();
-            // $this->registerView->temp_setUsername();
+            $this->registerView->setNotMatchingPassword();
 
         } catch (\error\ShortUsernameException $e) {
-            // $this->registerView->temp_setUsername();
-            $this->registerView->temp_shortUsernameMessage();
+            $this->registerView->setShortUsernameMessage();
 
         } catch (\error\BusyUsernameException $e) {
-            $this->registerView->temp_busyUsernameMessage();
-            // $this->registerView->temp_setUsername();
+            $this->registerView->setBusyUsernameMessage();
 
         } catch (\error\ InvalidCharactersException $e) {
-            $this->registerView->temp_invalidCharactersMessage();
-            // $this->registerView->temp_setUsername();
+            $this->registerView->setInvalidCharactersMessage();
         }
 
-        $this->registerView->temp_setUsername();
+        $this->registerView->setUsername();
         $this->renderRegister();
     }
 
@@ -62,7 +57,7 @@ class RegisterController {
         $this->users->temp_addNewUser($this->newUser);
 
         $this->flashMessageModel->setLoginUsernameFlash($this->newUser->username);
-        $this->flashMessageModel->temp_setLoginFlash($this->registerView->newUserMessage());
+        $this->flashMessageModel->setLoginFlash($this->registerView->newUserMessage());
         header('Location: /');
     }
 
