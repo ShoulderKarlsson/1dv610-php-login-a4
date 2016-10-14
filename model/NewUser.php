@@ -2,6 +2,11 @@
 
 namespace model;
 
+require_once('exceptions/ShortPasswordException.php');
+require_once('exceptions/ShortUsernameException.php');
+require_once('exceptions/NotMatchingPasswordException.php');
+require_once('exceptions/InvalidCharactersException.php');
+
 class NewUser {
     public $username;
     public $password;

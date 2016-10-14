@@ -2,6 +2,9 @@
 
 namespace model;
 
+require_once('exceptions/UsernameMissingException.php');
+require_once('exceptions/PasswordMissingException.php');
+
 class User {
 
 	public $username;
