@@ -30,49 +30,66 @@ class RegisterController {
         $this->users = new \model\Users($this->userDAL);
 
         try {
-            $this->newUser = $this->registerView->getNewUsercredentials();
-            $this->users->searchForUsername($this->newUser);
+            // $this->newUser = $this->registerView->getNewUsercredentials();
+            // $this->users->searchForUsername($this->newUser);
+            return $this->tryRegisterUser();
 
         } catch (\error\ShortPasswordException $e) {
             $this->registerView->temp_setShortPassword();
             $this->registerView->temp_setUsername();
-            $this->layoutView->renderRegister(false, $this->registerView, $this->dateTimeView);
-            return;
+            // $this->layoutView->renderRegister(false, $this->registerView, $this->dateTimeView);
+            // return;
 
         } catch (\error\NotMatchingPasswordException $e) {
             $this->registerView->temp_setNotMatchingPassword();
             $this->registerView->temp_setUsername();
-            $this->layoutView->renderRegister(false, $this->registerView, $this->dateTimeView);
-            return;            
+            // $this->layoutView->renderRegister(false, $this->registerView, $this->dateTimeView);
+            // return;            
 
         } catch (\error\ShortUsernameException $e) {
             $this->registerView->temp_setUsername();
             $this->registerView->temp_shortUsernameMessage();
-            $this->layoutView->renderRegister(false, $this->registerView, $this->dateTimeView);
-            return;
+            // $this->layoutView->renderRegister(false, $this->registerView, $this->dateTimeView);
+            // return;
 
         } catch (\error\BusyUsernameException $e) {
             $this->registerView->temp_busyUsernameMessage();
             $this->registerView->temp_setUsername();
-            $this->layoutView->renderRegister(false, $this->registerView, $this->dateTimeView);
-            return;
+            // $this->layoutView->renderRegister(false, $this->registerView, $this->dateTimeView);
+            // return;
 
         } catch (\error\ InvalidCharactersException $e) {
             $this->registerView->temp_invalidCharactersMessage();
             $this->registerView->temp_setUsername();
-            $this->layoutView->renderRegister(false, $this->registerView, $this->dateTimeView);
-            return;
+            // $this->layoutView->renderRegister(false, $this->registerView, $this->dateTimeView);
+            // return;
 
         }
 
-        // Hello?! This is done in the examt same method...........
-        $ud = new \model\UserDAL();
-        $users = new \model\Users($ud);
-        $users->temp_addNewUser($this->newUser);
+
+        $this->renderRegister();
+        // // Hello?! This is done in the examt same method...........
+        // $ud = new \model\UserDAL();
+        // $users = new \model\Users($ud);
+        // $users->temp_addNewUser($this->newUser);
         
+        // $this->flashMessageModel->setLoginUsernameFlash($this->newUser->username);
+        // $this->flashMessageModel->temp_setLoginFlash($this->registerView->newUserMessage());
+        // header('Location: /');
+    }
+
+    private function tryRegisterUser() {
+        $this->newUser = $this->registerView->getNewUsercredentials();
+        $this->users->searchForUsername($this->newUser);
+        $this->users->temp_addNewUser($this->newUser);
+
         $this->flashMessageModel->setLoginUsernameFlash($this->newUser->username);
         $this->flashMessageModel->temp_setLoginFlash($this->registerView->newUserMessage());
         header('Location: /');
+    }
+
+    private function renderRegister() {
+        $this->layoutView->renderRegister(false, $this->registerView, $this->dateTimeView);
     }
 
     // // Not using?

@@ -44,18 +44,14 @@ class LoginController {
 			$this->tryLoginUser();
 		} catch (\error\UsernameMissingException $e) {
 			$this->loginView->temp_setUsernameIsMissingMessage();
-			// return $this->renderLogin();
 
 		} catch(\error\PasswordMissingException $e) {
 			$this->loginView->temp_setPasswordMissingMessage();
 			$this->loginView->temp_setUsername();
-			// return $this->renderLogin();
 
 		} catch (\error\NoSuchUserException $e) {
 			$this->loginView->temp_setWrongCredentialsMessage();
 			$this->loginView->temp_setUsername();
-			// return $this->renderLogin();
-
 		}
 
 		$this->renderLogin();
@@ -123,8 +119,6 @@ class LoginController {
 		if (!$this->sessionModel->isLoggedIn()) {
 			$this->setWelcomeAndLogin();
 		}
-
-		// $this->renderLogin();
 	}
 
 	private function setWelcomeAndLogin() {

@@ -13,17 +13,6 @@ class RegisterView {
     private $message = '';
     private $username = '';
 
-  //   public function __construct(\model\FlashMessageModel $flashMessage) {
-  //       if ($flashMessage->isRegisterFlashSet()) {
-		// 	$this->message = $flashMessage->getRegisterFlashMessage();
-
-  //           if ($flashMessage->isRegisterUsername()) {
-  //               $this->username = $flashMessage->getRegisterUsernameFlash();
-  //           }
-		// }
-  //   }
-
-
     public function getNewUsercredentials() {
         return new \model\NewUser($this->getRequestUsername(),
                                   $this->getRequestPassword(),
@@ -38,15 +27,15 @@ class RegisterView {
         return isset($_POST[self::$name]) && isset($_POST[self::$password]) && isset($_POST[self::$passwordRepeat]);
     }
 
-    public function shortPasswordMessage() : string {
+    private function shortPasswordMessage() : string {
         return 'Password has too few characters, at least 6 characters.';
     }
 
-    public function notMatchingPasswordMessage() : string {
+    private function notMatchingPasswordMessage() : string {
         return 'Passwords do not match.';
     }
 
-    public function shortUsernameMessage() : string {
+    private function shortUsernameMessage() : string {
         return 'Username has too few characters, at least 3 characters.';
     }
 
@@ -54,17 +43,14 @@ class RegisterView {
         return "Registered new user.";
     }
 
-    public function invalidCharactersMessage() : string {
+    private function invalidCharactersMessage() : string {
         return 'Username contains invalid characters.';
     }
 
-    public function busyUsernameMessage() : string {
+    private function busyUsernameMessage() : string {
         return 'User exists, pick another username.';
     }
 
-    // #########################################################
-    // Functions below are used when testing without redirect!!
-    
     public function temp_shortUsernameMessage() {
         $this->message = $this->shortUsernameMessage();
     }
