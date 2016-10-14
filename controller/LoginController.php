@@ -61,7 +61,7 @@ class LoginController {
 
 		if ($this->sessionModel->isLoggedIn()) {
 			$this->sessionModel->logout();
-			$this->flashMessage->temp_setLoginFlash($this->loginView->byeMessage());
+			$this->flashMessage->setLoginFlash($this->loginView->byeMessage());
 		}
 
 		if ($this->loginView->isCookieSet()) {
@@ -76,7 +76,7 @@ class LoginController {
 		$storedCookiePassword = $this->loginView->getCookiePassword();
 
 		if ($this->cookies->isStored($storedCookiePassword) && $this->sessionModel->isLoggedIn() === false) {
-			$this->flashMessage->temp_setLoginFlash($this->loginView->backWithCookieMessage());
+			$this->flashMessage->setLoginFlash($this->loginView->backWithCookieMessage());
 			$this->sessionModel->login();
 			$this->redirectToSelf();
 		} else {
@@ -98,11 +98,11 @@ class LoginController {
 
 	private function setCookieAndCookieFlash() {
 		$this->setCookie();
-		$this->flashMessage->temp_setLoginFlash($this->loginView->welcomeAndRememberMessage());
+		$this->flashMessage->setLoginFlash($this->loginView->welcomeAndRememberMessage());
 	}
 
 	private function setNormalLoginFlash() {
-		$this->flashMessage->temp_setLoginFlash($this->loginView->welcomeMessage());
+		$this->flashMessage->setLoginFlash($this->loginView->welcomeMessage());
 	}
 
 	private function renderLogin() {

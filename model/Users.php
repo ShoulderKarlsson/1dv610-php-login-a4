@@ -5,7 +5,6 @@ namespace model;
 require_once('exceptions/BusyUsernameException.php');
 require_once('exceptions/NoSuchUserException.php');
 
-
 class Users {
 	private static $username = 'username';
 	private static $password = 'password';
@@ -38,11 +37,12 @@ class Users {
 		throw new \error\NoSuchUserException('Wrong name or password');
 	}
 
+	public function temp_addNewUser(\model\NewUser $u) {
+		$this->userDAL->addUser($this->users, $u);
+	}
+
 	private function getUsers() {
 		$this->users = $this->userDAL->collectUsers();
 	}
 
-	public function temp_addNewUser(\model\NewUser $u) {
-		$this->userDAL->addUser($this->users, $u);
-	}
 }
