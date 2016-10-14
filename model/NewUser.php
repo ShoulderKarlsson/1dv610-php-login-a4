@@ -30,10 +30,7 @@ class NewUser {
     		throw new \error\InvalidCharactersException('Username contains invalid characters');
     	}
 
-
-
         $this->username = strip_tags($username); // Strips HTML tags
-                
         $this->password = $password;
         $this->passwordRepeat = $passwordRepeat;
     }

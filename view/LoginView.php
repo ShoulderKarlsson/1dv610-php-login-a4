@@ -97,15 +97,15 @@ class LoginView {
 		setcookie(self::$cookiePassword, '', time() - 10);
 	}
 
-	public function missingUsernameMessage() : string {
+	private function missingUsernameMessage() : string {
 		return 'Username is missing';
 	}
 
-	public function missingPasswordMessage() : string {
+	private function missingPasswordMessage() : string {
 		return 'Password is missing';
 	}
 
-	public function wrongCredentialsMessage() : string {
+	private function wrongCredentialsMessage() : string {
 		return 'Wrong name or password';
 	}
 
@@ -143,13 +143,6 @@ class LoginView {
 		$this->usernameValue = $this->getRequestUsername();
 	}
 
-
-
-	/**
-	* Generate HTML code on the output buffer for the logout button
-	* @param $message, String output message
-	* @return  void, BUT writes to standard output!
-	*/
 	private function generateLogoutButtonHTML($message) {
 		return '
 			<form  method="post" >
@@ -159,11 +152,6 @@ class LoginView {
 		';
 	}
 
-	/**
-	* Generate HTML code on the output buffer for the logout button
-	* @param $message, String output message
-	* @return  void, BUT writes to standard output!
-	*/
 	private function generateLoginFormHTML($message) {
 		return '
 			<form method="post" >

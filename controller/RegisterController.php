@@ -26,49 +26,18 @@ class RegisterController {
     }
 
     public function register() {
-
-        /**
-         * Old implementation
-         */
-        // $this->newUser = $this->registerView->getNewUsercredentials();
-        // // $this->userDAL = new \model\UserDAL();
-        // // $this->users = new \model\Users($this->userDAL, $this->newUser);
-        // $this->sessionModel = new \model\SessionModel();
-        // $temp_validation = new \model\Validation($this->newUser, $this->sessionModel);
-        // #####################
-
-
         $this->userDAL = new \model\UserDAL();
         $this->users = new \model\Users($this->userDAL);
 
         try {
-
             $this->newUser = $this->registerView->getNewUsercredentials();
+            $this->users->searchForUsername($this->newUser);
 
-            $this->users->temp_searchForBusyUsernameWithException($this->newUser);
-
-
-            /**
-             * Old implementation
-             */
-            // $this->users->tryToRegisterUser();
-            // $temp_validation->tryRegister();
-            // ##################
         } catch (\error\ShortPasswordException $e) {
             $this->registerView->temp_setShortPassword();
             $this->registerView->temp_setUsername();
             $this->layoutView->renderRegister(false, $this->registerView, $this->dateTimeView);
             return;
-
-
-            /**
-             * Old implementation
-             */
-            // $this->flashMessageModel->temp_setRegisterFlash($this->registerView->shortPasswordMessage());
-            // $this->flashMessageModel->temp_setRegisterFlash($e->getMessage());
-            // $this->flashMessageModel->setRegisterUsernameFlash($this->newUser->username);
-            // $this->redirectToRegister();
-            // return;
 
         } catch (\error\NotMatchingPasswordException $e) {
             $this->registerView->temp_setNotMatchingPassword();
@@ -76,30 +45,11 @@ class RegisterController {
             $this->layoutView->renderRegister(false, $this->registerView, $this->dateTimeView);
             return;            
 
-
-            /**
-             * Old implementation
-             */
-            // $this->flashMessageModel->temp_setRegisterFlash($this->registerView->notMatchingPasswordMessage());
-            // $this->flashMessageModel->temp_setRegisterFlash($e->getMessage());
-            // $this->flashMessageModel->setRegisterUsernameFlash($this->newUser->username);
-            // $this->redirectToRegister();
-            // return;
-
         } catch (\error\ShortUsernameException $e) {
             $this->registerView->temp_setUsername();
             $this->registerView->temp_shortUsernameMessage();
             $this->layoutView->renderRegister(false, $this->registerView, $this->dateTimeView);
             return;
-
-            /**
-             * Old implementation
-             */
-            // $this->flashMessageModel->temp_setRegisterFlash($this->registerView->shortUsernameMessage());
-            // $this->flashMessageModel->temp_setRegisterFlash($e->getMessage());
-            // $this->flashMessageModel->setRegisterUsernameFlash($this->newUser->username);
-            // $this->redirectToRegister();
-            // return;
 
         } catch (\error\BusyUsernameException $e) {
             $this->registerView->temp_busyUsernameMessage();
@@ -107,31 +57,12 @@ class RegisterController {
             $this->layoutView->renderRegister(false, $this->registerView, $this->dateTimeView);
             return;
 
-
-            /**
-             * Old implementation
-             */
-            // $this->flashMessageModel->temp_setRegisterFlash($this->registerView->busyUsernameMessage());
-            // $this->flashMessageModel->temp_setRegisterFlash($e->getMessage());
-            // $this->flashMessageModel->setRegisterUsernameFlash($this->newUser->username);
-            // $this->redirectToRegister();
-            // return;
-
         } catch (\error\ InvalidCharactersException $e) {
             $this->registerView->temp_invalidCharactersMessage();
             $this->registerView->temp_setUsername();
             $this->layoutView->renderRegister(false, $this->registerView, $this->dateTimeView);
             return;
 
-
-            /**
-             * Old implementation
-             */
-            // $this->flashMessageModel->temp_setRegisterFlash($this->registerView->invalidCharactersMessage());
-            // $this->flashMessageModel->setRegisterUsernameFlash(strip_tags($this->newUser->username));
-            // $this->redirectToRegister();
-            // return;
-            // ##################
         }
 
         // Hello?! This is done in the examt same method...........
@@ -144,8 +75,8 @@ class RegisterController {
         header('Location: /');
     }
 
-    // Not using?
-    private function redirectToRegister() {
-        header('Location: ?register');
-    }
+    // // Not using?
+    // private function redirectToRegister() {
+    //     header('Location: ?register');
+    // }
 }

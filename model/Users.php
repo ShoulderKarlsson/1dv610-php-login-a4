@@ -19,7 +19,7 @@ class Users {
 		$this->getUsers();
 	}
 
-	public function temp_searchForBusyUsernameWithException(\model\NewUser $newUser) {
+	public function searchForUsername(\model\NewUser $newUser) {
 		foreach($this->users as $storedUser) {
 			if ($storedUser[self::$username] === $newUser->username) {
 				throw new \error\BusyUsernameException('User exists, pick another username');
@@ -27,7 +27,7 @@ class Users {
 		}
 	}
 
-	public function temp_searchForUserWithException(\model\User $user) {
+	public function searchForUser(\model\User $user) {
 		foreach ($this->users as $storedUser) {
 			if ($storedUser[self::$username] === $user->username &&
 				$storedUser[self::$password] === $user->password) {

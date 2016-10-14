@@ -115,7 +115,7 @@ class LoginController {
 
 	private function tryLoginUser() {
 		$this->newUser = $this->loginView->getUserinformation();
-		$this->users->temp_searchForUserWithException($this->newUser);
+		$this->users->searchForUser($this->newUser);
 		if (!$this->sessionModel->isLoggedIn()) {
 			$this->setWelcomeAndLogin();
 		}
