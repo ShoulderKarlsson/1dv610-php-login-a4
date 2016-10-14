@@ -38,7 +38,7 @@ class RegisterView {
         return isset($_POST[self::$name]) && isset($_POST[self::$password]) && isset($_POST[self::$passwordRepeat]);
     }
 
-        public function shortPasswordMessage() : string {
+    public function shortPasswordMessage() : string {
         return 'Password has too few characters, at least 6 characters.';
     }
 
@@ -61,7 +61,6 @@ class RegisterView {
     public function busyUsernameMessage() : string {
         return 'User exists, pick another username.';
     }
-
 
     // #########################################################
     // Functions below are used when testing without redirect!!
@@ -89,12 +88,6 @@ class RegisterView {
     public function temp_setUsername() {
         $this->username = strip_tags($this->getRequestUsername());
     }
-
-
-
-
-
-
 
     public function response() {
         return '

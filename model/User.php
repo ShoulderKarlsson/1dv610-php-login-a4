@@ -2,11 +2,6 @@
 
 namespace model;
 
-
-/**
- * Later, remove repeat if not necessary
- */
-
 class User {
 
 	public $username;

@@ -36,72 +36,39 @@ class LoginController {
 	}
 
 	public function login() {
-
-		// Uncomment this for old implementation
-		// $this->newUser = $this->loginView->getUserinformation();
-		// $this->userDAL = new \model\UserDAL();
-		// $this->users = new \model\Users($this->userDAL, $this->newUser);
 		
 		$this->userDAL = new \model\UserDAL();
 		$this->users = new \model\Users($this->userDAL);
 
 		try {
-			// $this->users->tryToLoginUser($this->sessionModel);
-
-			$this->newUser = $this->loginView->getUserinformation();
-
-			$this->users->temp_searchForUserWithException($this->newUser);
-
-			$this->sessionModel->temp_alreadyLoggedIn();
+			$this->tryLoginUser();
+			// $this->newUser = $this->loginView->getUserinformation();
+			// $this->users->temp_searchForUserWithException($this->newUser);
+			// $this->sessionModel->temp_alreadyLoggedIn();
 
 		} catch (\error\UsernameMissingException $e) {
 			$this->loginView->temp_setUsernameIsMissingMessage();
-			return $this->layoutView->render($this->sessionModel->isLoggedIn(), $this->loginView, $this->dateTimeView);
-
-			/**
-			 * Old implementation
-			 */
-			// $this->flashMessage->temp_setLoginFlash($this->loginView->missingUsernameMessage());
-			// $this->flashMessage->temp_setLoginFlash($e->getMessage());
-			// return $this->redirectToSelf();
+			return $this->renderLogin();
 
 		} catch(\error\PasswordMissingException $e) {
 			$this->loginView->temp_setPasswordMissingMessage();
 			$this->loginView->temp_setUsername();
-			return $this->layoutView->render($this->sessionModel->isLoggedIn(), $this->loginView, $this->dateTimeView);
-
-
-			/**
-			 * Old implementation below
-			 */
-			// $this->flashMessage->setLoginUsernameFlash($this->newUser->username);
-			// $this->flashMessage->temp_setLoginFlash($this->loginView->missingPasswordMessage());
-			// $this->flashMessage->temp_setLoginFlash($e->getMessage());
-			// return $this->redirectToSelf();
+			return $this->renderLogin();
 
 		} catch (\error\NoSuchUserException $e) {
 			$this->loginView->temp_setWrongCredentialsMessage();
 			$this->loginView->temp_setUsername();
-			return $this->layoutView->render($this->sessionModel->isLoggedIn
-				(), $this->loginView, $this->dateTimeView);
+			return $this->renderLogin();
 
-			/**
-			 * Old implementation
-			 */
-			// $this->flashMessage->setLoginUsernameFlash($this->newUser->username);
-			// // $this->flashMessage->temp_setLoginFlash($this->loginView->wrongCredentialsMessage());
-			// $this->flashMessage->temp_setLoginFlash($e->getMessage());
-			// return $this->redirectToSelf();
+		} 
+		// catch (\error\AlreadyLoggedInException $e) {
+		// 	return $this->renderLogin();
 
+		// }
 
-		} catch (\error\AlreadyLoggedInException $e) {
-			return $this->layoutView->render(true, $this->loginView, $this->dateTimeView);
-
-		}
-
-		$this->setSuccessfulFlashMessage();
-		$this->sessionModel->login();
-		return $this->redirectToSelf();
+		// $this->setSuccessfulFlashMessage();
+		// $this->sessionModel->login();
+		// return $this->redirectToSelf();
 	}
 
 	public function logout() {
@@ -120,14 +87,14 @@ class LoginController {
 	}
 
 	public function tryLoginWithCookies() {
-		$cookiePW = $this->loginView->getCookiePassword();
+		$storedCookiePassword = $this->loginView->getCookiePassword();
 
-		if ($this->cookies->isStored($cookiePW) && $this->sessionModel->isLoggedIn() === false) {
+		if ($this->cookies->isStored($storedCookiePassword) && $this->sessionModel->isLoggedIn() === false) {
 			$this->flashMessage->temp_setLoginFlash($this->loginView->backWithCookieMessage());
 			$this->sessionModel->login();
 			$this->redirectToSelf();
 		} else {
-			$this->layoutView->render($this->sessionModel->isLoggedIn(), $this->loginView, $this->dateTimeView);
+			$this->renderLogin();
 		}
 	}
 
@@ -152,6 +119,21 @@ class LoginController {
 		$this->flashMessage->temp_setLoginFlash($this->loginView->welcomeMessage());
 	}
 
+	private function renderLogin() {
+		$this->layoutView->render($this->sessionModel->isLoggedIn(), 
+								  $this->loginView, 
+								  $this->dateTimeView);
+	}
+
+	private function tryLoginUser() {
+		$this->newUser = $this->loginView->getUserinformation();
+		$this->users->temp_searchForUserWithException($this->newUser);
+		$this->setSuccessfulFlashMessage();
+		$this->sessionModel->login();
+		$this->redirectToSelf();
+	}
+
+	// Move to view?
 	private function redirectToSelf() {
 		header('Location: '.$_SERVER['PHP_SELF']);
 	}

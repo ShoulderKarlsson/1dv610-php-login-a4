@@ -98,31 +98,31 @@ class LoginView {
 	}
 
 	public function missingUsernameMessage() : string {
-		return "Username is missing";
+		return 'Username is missing';
 	}
 
 	public function missingPasswordMessage() : string {
-		return "Password is missing";
+		return 'Password is missing';
 	}
 
 	public function wrongCredentialsMessage() : string {
-		return "Wrong name or password";
+		return 'Wrong name or password';
 	}
 
 	public function backWithCookieMessage() : string {
-		return "Welcome back with cookie";
+		return 'Welcome back with cookie';
 	}
 
 	public function byeMessage() : string {
-		return "Bye bye!";
+		return 'Bye bye!';
 	}
 
 	public function welcomeAndRememberMessage() : string {
-		return "Welcome and you will be remebered.";
+		return 'Welcome and you will be remebered.';
 	}
 
 	public function welcomeMessage() : string {
-		return "Welcome";
+		return 'Welcome';
 	}
 
 	// #########################################################

@@ -27,8 +27,3 @@ class SessionModel {
 	}
 }
 
-
-
-/**
- * TESTING WITH NEW IMPLEMENTAITON - VALIDATION ON DIFFERENT PLACES YO
- */

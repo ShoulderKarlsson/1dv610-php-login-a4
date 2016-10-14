@@ -20,6 +20,7 @@ class RegisterController {
         $this->layoutView = $lv;
     }
 
+
     public function presentRegister($isLoggedIn) {
         $this->layoutView->renderRegister($isLoggedIn, $this->registerView, $this->dateTimeView);
     }
@@ -133,6 +134,7 @@ class RegisterController {
             // ##################
         }
 
+        // Hello?! This is done in the examt same method...........
         $ud = new \model\UserDAL();
         $users = new \model\Users($ud);
         $users->temp_addNewUser($this->newUser);
