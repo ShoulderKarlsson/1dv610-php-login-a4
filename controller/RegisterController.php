@@ -33,25 +33,26 @@ class RegisterController {
             return $this->tryRegisterUser();
         } catch (\error\ShortPasswordException $e) {
             $this->registerView->temp_setShortPassword();
-            $this->registerView->temp_setUsername();
+            // $this->registerView->temp_setUsername();
 
         } catch (\error\NotMatchingPasswordException $e) {
             $this->registerView->temp_setNotMatchingPassword();
-            $this->registerView->temp_setUsername();
+            // $this->registerView->temp_setUsername();
 
         } catch (\error\ShortUsernameException $e) {
-            $this->registerView->temp_setUsername();
+            // $this->registerView->temp_setUsername();
             $this->registerView->temp_shortUsernameMessage();
 
         } catch (\error\BusyUsernameException $e) {
             $this->registerView->temp_busyUsernameMessage();
-            $this->registerView->temp_setUsername();
+            // $this->registerView->temp_setUsername();
 
         } catch (\error\ InvalidCharactersException $e) {
             $this->registerView->temp_invalidCharactersMessage();
-            $this->registerView->temp_setUsername();
+            // $this->registerView->temp_setUsername();
         }
 
+        $this->registerView->temp_setUsername();
         $this->renderRegister();
     }
 
