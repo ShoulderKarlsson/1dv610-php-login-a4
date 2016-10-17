@@ -27,11 +27,18 @@ class LoginView {
 				$this->usernameValue = $flashMessage->getLoginUsernameFlash();
 			}
 		}
+		
+		
+		// if ($flashMessage->temp_isLoginFlashMessageSet()) {
+		// 	$this->message = 
+		// }
+
+
 	}
 
 
 	public function response() {
-		$active = new \model\SessionModel(); // Change this - send in as argument
+		$active = new \model\SessionModel();
 
 		return $active->isLoggedIn() ?
 			$this->generateLogoutButtonHTML($this->message) :
@@ -58,9 +65,9 @@ class LoginView {
 		return $_COOKIE[self::$cookieName];
 	}
 
-	public function getCookiePassword() : string {
-		return $_COOKIE[self::$cookiePassword];
-	}
+	// public function getCookiePassword() : string {
+	// 	return $_COOKIE[self::$cookiePassword];
+	// }
 
 	public function getStoredCookieInfo() {
 		$c = new \model\Cookie($_COOKIE[self::$cookieName]);
@@ -93,23 +100,10 @@ class LoginView {
 		setcookie(self::$cookiePassword, $c->cookiePassword, $duration);
 	}
 
-
 	public function removeCookies() {
 		setcookie(self::$cookieName, '', time() - 10);
 		setcookie(self::$cookiePassword, '', time() - 10);
 	}
-
-	// private function missingUsernameMessage() : string {
-	// 	return 'Username is missing';
-	// }
-
-	// private function missingPasswordMessage() : string {
-	// 	return 'Password is missing';
-	// }
-
-	// private function wrongCredentialsMessage() : string {
-	// 	return 'Wrong name or password';
-	// }
 
 	public function backWithCookieMessage() : string {
 		return 'Welcome back with cookie';
@@ -129,17 +123,14 @@ class LoginView {
 
 	public function setUsernameIsMissingMessage() {
 		$this->message = 'Username is missing';
-		// $this->message = $this->missingUsernameMessage();
 	}
 
 	public function setPasswordMissingMessage() {
 		$this->message = 'Password is missing';
-		// $this->message = $this->missingPasswordMessage();
 	}
 
 	public function setWrongCredentialsMessage() {
 		$this->message = 'Wrong name or password';
-		// $this->message = $this->wrongCredentialsMessage();
 	}
 
 	public function setUsername() {
