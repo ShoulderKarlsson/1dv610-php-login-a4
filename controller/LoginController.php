@@ -43,16 +43,17 @@ class LoginController {
 		try {
 			$this->tryLoginUser();
 		} catch (\error\UsernameMissingException $e) {
-			$this->loginView->temp_setUsernameIsMissingMessage();
+			$this->loginView->setUsernameIsMissingMessage();
 
 		} catch(\error\PasswordMissingException $e) {
-			$this->loginView->temp_setPasswordMissingMessage();
-			$this->loginView->temp_setUsername();
+			$this->loginView->setPasswordMissingMessage();
+			$this->loginView->setUsername();
 
 		} catch (\error\NoSuchUserException $e) {
-			$this->loginView->temp_setWrongCredentialsMessage();
-			$this->loginView->temp_setUsername();
+			$this->loginView->setWrongCredentialsMessage();
+			$this->loginView->setUsername();
 		}
+		
 
 		$this->renderLogin();
 	}

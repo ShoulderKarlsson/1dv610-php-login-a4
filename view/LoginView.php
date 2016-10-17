@@ -70,7 +70,8 @@ class LoginView {
 	}
 
 	public function wantsToLogin() : bool {
-		return isset($_POST[self::$password]) || isset($_POST[self::$name]);
+		return isset($_POST[self::$password]) || 
+			   isset($_POST[self::$name]);
 	}
 
 	public function wantsToLogout() : bool {
@@ -82,7 +83,8 @@ class LoginView {
 	}
 
 	public function isCookieSet() : bool {
-		return isset($_COOKIE[self::$cookieName]) && isset($_COOKIE[self::$cookiePassword]);
+		return isset($_COOKIE[self::$cookieName]) && 
+			   isset($_COOKIE[self::$cookiePassword]);
 	}
 
 	public function setClientCookie(\model\Cookie $c) {
@@ -97,17 +99,17 @@ class LoginView {
 		setcookie(self::$cookiePassword, '', time() - 10);
 	}
 
-	private function missingUsernameMessage() : string {
-		return 'Username is missing';
-	}
+	// private function missingUsernameMessage() : string {
+	// 	return 'Username is missing';
+	// }
 
-	private function missingPasswordMessage() : string {
-		return 'Password is missing';
-	}
+	// private function missingPasswordMessage() : string {
+	// 	return 'Password is missing';
+	// }
 
-	private function wrongCredentialsMessage() : string {
-		return 'Wrong name or password';
-	}
+	// private function wrongCredentialsMessage() : string {
+	// 	return 'Wrong name or password';
+	// }
 
 	public function backWithCookieMessage() : string {
 		return 'Welcome back with cookie';
@@ -125,21 +127,22 @@ class LoginView {
 		return 'Welcome';
 	}
 
-	// #########################################################
-	// Functions below are used when testing without redirect!!
-	public function temp_setUsernameIsMissingMessage() {
-		$this->message = $this->missingUsernameMessage();
+	public function setUsernameIsMissingMessage() {
+		$this->message = 'Username is missing';
+		// $this->message = $this->missingUsernameMessage();
 	}
 
-	public function temp_setPasswordMissingMessage() {
-		$this->message = $this->missingPasswordMessage();
+	public function setPasswordMissingMessage() {
+		$this->message = 'Password is missing';
+		// $this->message = $this->missingPasswordMessage();
 	}
 
-	public function temp_setWrongCredentialsMessage() {
-		$this->message = $this->wrongCredentialsMessage();
+	public function setWrongCredentialsMessage() {
+		$this->message = 'Wrong name or password';
+		// $this->message = $this->wrongCredentialsMessage();
 	}
 
-	public function temp_setUsername() {
+	public function setUsername() {
 		$this->usernameValue = $this->getRequestUsername();
 	}
 
