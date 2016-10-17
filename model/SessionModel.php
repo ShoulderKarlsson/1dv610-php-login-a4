@@ -18,12 +18,12 @@ class SessionModel {
 		unset($_SESSION[self::$isLoggedIn]);
 	}
 
-	public function temp_alreadyLoggedIn() {
-		if ($this->isLoggedIn()) {
-
-			// Not using message, keeping for logs
-			throw new \error\AlreadyLoggedInException('Already logged in!');
-		}
-	}
+	// public function temp_alreadyLoggedIn() {
+	// 	if ($this->isLoggedIn()) {
+			
+	// 		// Not using message, keeping for logs
+	// 		throw new \error\AlreadyLoggedInException('Already logged in!');
+	// 	}
+	// }
 }
 
