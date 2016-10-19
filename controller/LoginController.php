@@ -13,11 +13,11 @@ require_once('model/CookieDAL.php');
 class LoginController {
 	private $loginView;
 	private $dateTimeView;
-	private $newUser;
+	// private $newUser;
 	private $layoutView;
 	private $flashMessage;
 	private $users;
-	private $userDAL;
+	// private $userDAL;
 	private $cookieDAL;
 	private $sessionModel;
 	private $cookies;
@@ -25,20 +25,22 @@ class LoginController {
 	public function __construct(\view\LoginView $loginView,
 								\view\DateTimeView $dateTimeView,
 								\view\LayoutView $layoutView,
-								\model\FlashMessageModel $flashMessage) {
+								\model\FlashMessageModel $flashMessage,
+								\model\SessionModel $sessionModel) {
 		$this->loginView = $loginView;
 		$this->dateTimeView = $dateTimeView;
 		$this->layoutView = $layoutView;
 		$this->flashMessage = $flashMessage;
-		$this->sessionModel = new \model\SessionModel();
+		$this->sessionModel = $sessionModel;
 		$this->cookieDAL = new \model\CookieDAL();
 		$this->cookies = new \model\Cookies($this->cookieDAL);
 	}
 
-	public function login() {
-		
-		$this->userDAL = new \model\UserDAL();
-		$this->users = new \model\Users($this->userDAL);
+	public function login(\model\Users $u) {
+	
+		$this->users = $u;		
+		// $this->userDAL = new \model\UserDAL();
+		// $this->users = new \model\Users($this->userDAL);
 
 		try {
 			$this->tryLoginUser();
@@ -113,8 +115,12 @@ class LoginController {
 	}
 
 	private function tryLoginUser() {
-		$this->newUser = $this->loginView->getUserinformation();
-		$this->users->searchForUser($this->newUser);
+		$userCredentials = $this->loginView->getUserinformation();
+		$this->users->searchForUser($userCredentials);
+
+		// Old
+		// $this->newUser = $this->loginView->getUserinformation();
+		// $this->users->searchForUser($this->newUser);
 
 		// Prevents login when already logged in
 		if (!$this->sessionModel->isLoggedIn()) {

@@ -29,29 +29,32 @@ class MainController {
 		$this->dateTime = new \view\DateTimeView();
 		$this->layoutView = new \view\LayoutView();
 		$this->sessionModel = new \model\SessionModel();
+		$this->userDAL = new \model\UserDAL();
+		$this->users = new \model\Users($this->userDAL);
 		$this->loginView = new \view\LoginView($this->flashMessage);
 		$this->registerView = new \view\RegisterView($this->flashMessage);
-		
 		$this->registerController = new \controller\RegisterController($this->registerView, 
 																	   $this->layoutView, 
 																	   $this->dateTime, 
 																	   $this->flashMessage);
+
 		$this->loginController = new \controller\LoginController($this->loginView, 
 																 $this->dateTime, 
 																 $this->layoutView, 
-																 $this->flashMessage);
+																 $this->flashMessage,
+																 $this->sessionModel);
 	}
 
 	public function init() {
 
 		if ($this->loginView->wantsToLogin()) {
-			return $this->loginController->login();
+			return $this->loginController->login($this->users);
 
 		} else if ($this->loginView->wantsToLogout()) {
 			return $this->loginController->logout();
 
 		} else if ($this->registerView->wantsToRegister()) {
-			return $this->registerController->register();
+			return $this->registerController->register($this->users);
 
 		} else if ($this->registerView->wantsToAccsessRegister()) {
 			if ($this->sessionModel->isLoggedIn()) {
