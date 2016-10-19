@@ -6,12 +6,13 @@ require_once('exceptions/BusyUsernameException.php');
 require_once('exceptions/NoSuchUserException.php');
 
 class Users {
+	
 	private static $username = 'username';
 	private static $password = 'password';
 	private $users = array();
 	private $userDAL;
-	private $userCredentials;
-	private $sessionModel;
+	// private $userCredentials;
+	// private $sessionModel;
 
 	public function __construct(UserDAL $db) {
 		$this->userDAL = $db;

@@ -71,7 +71,6 @@ class MainController {
 		}
 	}
 
-
 	/**
 	 * Cookiepassword is good for one request.
 	 */

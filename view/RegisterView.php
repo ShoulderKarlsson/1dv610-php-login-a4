@@ -28,7 +28,9 @@ class RegisterView {
     }
 
     public function wantsToRegister() : bool {
-        return isset($_POST[self::$name]) && isset($_POST[self::$password]) && isset($_POST[self::$passwordRepeat]);
+        return isset($_POST[self::$name]) && 
+               isset($_POST[self::$password]) && 
+               isset($_POST[self::$passwordRepeat]);
     }
 
     public function setShortUsernameMessage() {

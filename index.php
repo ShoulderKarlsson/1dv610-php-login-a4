@@ -5,6 +5,7 @@ session_start();
 
 /**
  * TODO: Move redirects to LoginView / RegisterView
+ * TODO: Remove unused fields(?)
  */
 
 
