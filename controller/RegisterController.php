@@ -21,7 +21,6 @@ class RegisterController {
         $this->layoutView = $lv;
     }
 
-
     public function presentRegister($isLoggedIn) {
         $this->layoutView->renderRegister($isLoggedIn, $this->registerView, $this->dateTimeView);
     }
