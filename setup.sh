@@ -1,3 +1,4 @@
+#!/bin/sh
 echo "Creating cookies.json"
 touch db/cookies.json
 echo "[]" | tee db/cookies.json
