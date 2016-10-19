@@ -11,8 +11,6 @@ class Users {
 	private static $password = 'password';
 	private $users = array();
 	private $userDAL;
-	// private $userCredentials;
-	// private $sessionModel;
 
 	public function __construct(UserDAL $db) {
 		$this->userDAL = $db;
@@ -29,29 +27,17 @@ class Users {
 
 	public function searchForUser(\model\User $user) {
 		foreach ($this->users as $storedUser) {
-
-			// Used for hashing with pw
 			if ($storedUser[self::$username] === $user->username &&
 				password_verify($user->password, $storedUser[self::$password])) {
 				return true;
 			}
-
-
-			// if ($storedUser[self::$username] === $user->username &&
-			// 	$storedUser[self::$password] === $user->password) {
-			// 	return true;
-			// }
 		}
 
 		throw new \error\NoSuchUserException('Wrong name or password');
 	}
 
 	public function addNewUser(\model\NewUser $u) {
-
-		// Used for hashing with pw
 		$u->password = $this->generateHash($u->password);
-		
-
 		$this->userDAL->addUser($this->users, $u);
 	}
 
