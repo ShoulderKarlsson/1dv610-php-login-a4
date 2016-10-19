@@ -74,12 +74,8 @@ class LoginController {
 	}
 
 	public function tryLoginWithCookies() {
-		// $storedCookiePassword = $this->loginView->getCookiePassword();
 		$cookie = $this->loginView->getStoredCookieInfo();
 
-		$storedCookiePassword = $cookie->cookiePassword;
-
-		// if ($this->cookies->isStored($storedCookiePassword) && $this->sessionModel->isLoggedIn() === false) {
 		if ($this->cookies->isStored($cookie->cookiePassword) && $this->sessionModel->isLoggedIn() === false) {
 			$this->flashMessage->setLoginFlash($this->loginView->backWithCookieMessage());
 			$this->sessionModel->login();
@@ -132,7 +128,7 @@ class LoginController {
 		$this->redirectToSelf();
 	}
 
-	// Move to view?
+	// TODO: Move to view
 	private function redirectToSelf() {
 		header('Location: '.$_SERVER['PHP_SELF']);
 	}

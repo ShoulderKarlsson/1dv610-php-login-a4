@@ -54,7 +54,7 @@ class RegisterController {
     private function tryRegisterUser() {
         $this->newUser = $this->registerView->getNewUsercredentials();
         $this->users->searchForUsername($this->newUser);
-        $this->users->temp_addNewUser($this->newUser);
+        $this->users->addNewUser($this->newUser);
 
         $this->flashMessageModel->setLoginUsernameFlash($this->newUser->username);
         $this->flashMessageModel->setLoginFlash($this->registerView->newUserMessage());

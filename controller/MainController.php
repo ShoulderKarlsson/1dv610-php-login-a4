@@ -31,8 +31,15 @@ class MainController {
 		$this->sessionModel = new \model\SessionModel();
 		$this->loginView = new \view\LoginView($this->flashMessage);
 		$this->registerView = new \view\RegisterView($this->flashMessage);
-		$this->registerController = new \controller\RegisterController($this->registerView, $this->layoutView, $this->dateTime, $this->flashMessage);
-		$this->loginController = new \controller\LoginController($this->loginView, $this->dateTime, $this->layoutView, $this->flashMessage);
+		
+		$this->registerController = new \controller\RegisterController($this->registerView, 
+																	   $this->layoutView, 
+																	   $this->dateTime, 
+																	   $this->flashMessage);
+		$this->loginController = new \controller\LoginController($this->loginView, 
+																 $this->dateTime, 
+																 $this->layoutView, 
+																 $this->flashMessage);
 	}
 
 	public function init() {

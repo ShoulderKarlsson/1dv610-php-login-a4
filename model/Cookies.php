@@ -62,7 +62,7 @@ class Cookies {
 	public function removeCookies(\model\Cookie $c) {
 		$temp = array();
 		foreach($this->storedCookies as $cookie) {
-			if ($cookie[self::$cookiePassword] !== $c->cookiePassword) { // STRING DEPENDENCIEEEEE
+			if ($cookie[self::$cookiePassword] !== $c->cookiePassword) {
 				$temp[] = $cookie;
 			}
 		}

@@ -19,7 +19,6 @@ class LoginView {
 	private $usernameValue = '';
 
 	public function __construct(\model\FlashMessageModel $flashMessage) {
-
 		if ($flashMessage->isLoginFlashSet()) {
 			$this->message = $flashMessage->getLoginFlashMessage();
 
@@ -27,15 +26,7 @@ class LoginView {
 				$this->usernameValue = $flashMessage->getLoginUsernameFlash();
 			}
 		}
-		
-		
-		// if ($flashMessage->temp_isLoginFlashMessageSet()) {
-		// 	$this->message = 
-		// }
-
-
 	}
-
 
 	public function response() {
 		$active = new \model\SessionModel();
@@ -64,10 +55,6 @@ class LoginView {
 	private function getCookiename() : string {
 		return $_COOKIE[self::$cookieName];
 	}
-
-	// public function getCookiePassword() : string {
-	// 	return $_COOKIE[self::$cookiePassword];
-	// }
 
 	public function getStoredCookieInfo() {
 		$c = new \model\Cookie($_COOKIE[self::$cookieName]);

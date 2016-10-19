@@ -37,7 +37,7 @@ class Users {
 		throw new \error\NoSuchUserException('Wrong name or password');
 	}
 
-	public function temp_addNewUser(\model\NewUser $u) {
+	public function addNewUser(\model\NewUser $u) {
 		$this->userDAL->addUser($this->users, $u);
 	}
 
