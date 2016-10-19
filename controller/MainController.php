@@ -58,10 +58,6 @@ class MainController {
 
 		} else if ($this->registerView->wantsToAccsessRegister() && 
 				   !$this->sessionModel->isLoggedIn()) {
-			
-			// if ($this->sessionModel->isLoggedIn()) {
-			// 	header('Location: '. $_SERVER['PHP_SELF']);
-			// }
 
 			$this->registerController->presentRegister($this->sessionModel->isLoggedIn());
 
