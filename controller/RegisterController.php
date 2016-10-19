@@ -27,9 +27,6 @@ class RegisterController {
     }
 
     public function register(\model\Users $u) {
-        // $this->userDAL = new \model\UserDAL();
-        // $this->users = new \model\Users($this->userDAL);
-
         $this->users = $u;
 
         try {
