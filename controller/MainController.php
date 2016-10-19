@@ -56,10 +56,12 @@ class MainController {
 		} else if ($this->registerView->wantsToRegister()) {
 			return $this->registerController->register($this->users);
 
-		} else if ($this->registerView->wantsToAccsessRegister()) {
-			if ($this->sessionModel->isLoggedIn()) {
-				header('Location: '. $_SERVER['PHP_SELF']);
-			}
+		} else if ($this->registerView->wantsToAccsessRegister() && 
+				   !$this->sessionModel->isLoggedIn()) {
+			
+			// if ($this->sessionModel->isLoggedIn()) {
+			// 	header('Location: '. $_SERVER['PHP_SELF']);
+			// }
 
 			$this->registerController->presentRegister($this->sessionModel->isLoggedIn());
 
