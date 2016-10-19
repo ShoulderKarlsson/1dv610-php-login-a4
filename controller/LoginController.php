@@ -13,11 +13,9 @@ require_once('model/CookieDAL.php');
 class LoginController {
 	private $loginView;
 	private $dateTimeView;
-	// private $newUser;
 	private $layoutView;
 	private $flashMessage;
 	private $users;
-	// private $userDAL;
 	private $cookieDAL;
 	private $sessionModel;
 	private $cookies;
@@ -37,11 +35,7 @@ class LoginController {
 	}
 
 	public function login(\model\Users $u) {
-	
-		$this->users = $u;		
-		// $this->userDAL = new \model\UserDAL();
-		// $this->users = new \model\Users($this->userDAL);
-
+		$this->users = $u;
 		try {
 			$this->tryLoginUser();
 		} catch (\error\UsernameMissingException $e) {
@@ -117,10 +111,6 @@ class LoginController {
 	private function tryLoginUser() {
 		$userCredentials = $this->loginView->getUserinformation();
 		$this->users->searchForUser($userCredentials);
-
-		// Old
-		// $this->newUser = $this->loginView->getUserinformation();
-		// $this->users->searchForUser($this->newUser);
 
 		// Prevents login when already logged in
 		if (!$this->sessionModel->isLoggedIn()) {

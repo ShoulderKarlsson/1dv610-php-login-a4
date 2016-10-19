@@ -10,6 +10,7 @@ class RegisterController {
     private $flashMessageModel;
     private $layoutView;
     private $newUser;
+    private $users;
     public function __construct(\view\RegisterView $rv,
                                 \view\LayoutView $lv,
                                 \view\DateTimeView $dtv,
@@ -25,9 +26,11 @@ class RegisterController {
         $this->layoutView->renderRegister($isLoggedIn, $this->registerView, $this->dateTimeView);
     }
 
-    public function register() {
-        $this->userDAL = new \model\UserDAL();
-        $this->users = new \model\Users($this->userDAL);
+    public function register(\model\Users $u) {
+        // $this->userDAL = new \model\UserDAL();
+        // $this->users = new \model\Users($this->userDAL);
+
+        $this->users = $u;
 
         try {
             return $this->tryRegisterUser();
