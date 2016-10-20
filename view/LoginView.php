@@ -19,6 +19,8 @@ class LoginView {
 	private $usernameValue = '';
 
 	public function __construct(\model\FlashMessageModel $flashMessage) {
+
+		// Getting and setting flashmessages when creating view
 		if ($flashMessage->isLoginFlashSet()) {
 			$this->message = $flashMessage->getLoginFlashMessage();
 

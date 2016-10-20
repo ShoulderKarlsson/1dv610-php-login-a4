@@ -25,15 +25,15 @@ class Cookies {
 	}
 
 	public function replaceOldCookie(\model\Cookie $newCookie, $oldPw) {
-		$temp = array();
+		$cookiePlaceholder = array();
 		foreach($this->storedCookies as $cookie) {
 			if ($cookie[self::$cookiePassword] !== $oldPw) {
-				$temp[] = $cookie;
+				$cookiePlaceholder[] = $cookie;
 			}
 		}
-		$temp[] = $newCookie;
+		$cookiePlaceholder[] = $newCookie;
 
-		return $temp;
+		return $cookiePlaceholder;
 	}
 
 	public function getCookie() : array {
@@ -60,14 +60,14 @@ class Cookies {
 	}
 
 	public function removeCookies(\model\Cookie $c) {
-		$temp = array();
+		$cookiePlaceholder = array();
 		foreach($this->storedCookies as $cookie) {
 			if ($cookie[self::$cookiePassword] !== $c->cookiePassword) {
-				$temp[] = $cookie;
+				$cookiePlaceholder[] = $cookie;
 			}
 		}
 
-		$this->cookieDAL->updatePassword($temp);
+		$this->cookieDAL->updatePassword($cookiePlaceholder);
 	}
 
 	private function getStoredCookies() {
