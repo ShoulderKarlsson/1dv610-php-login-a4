@@ -1,11 +1,14 @@
 # Login and Registration Module.
 
+**NOTE:** The startup instrucitons are made for Linux.
+
 ## Setup
     sh setup.sh
 This will create the files used to store users and cookies.
 
 *To run local on machine*
-
+    
+    apt-get install php7.0
     php -S localhost:PORT
 
 
@@ -14,6 +17,10 @@ This will create the files used to store users and cookies.
     Registration
     Login
     Login by cookie
+
+## Not Implemented
+    Protection against session hijacking
+    
     
     
 ## Live version of application.
